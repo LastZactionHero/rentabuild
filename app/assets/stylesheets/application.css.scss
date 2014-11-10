@@ -112,7 +112,7 @@ h3 {
     padding-top: 80px;
 
     background-color: white;
-    background-image: url("/assets/landing_background.png");
+    background-image: asset-url("landing_background.png");
     background-size: cover;
 
     color: $color_alternate_primary;
