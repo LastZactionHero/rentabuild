@@ -184,7 +184,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
       filament: 'ABS, PLA',
       price: 1299.0,
       sd: false,
-      usb: false,
+      usb: true,
       website: 'http://www.solidoodle.com/workbench',
       image: 'http://www.solidoodle.com/image/cache/data/WB_pers%20(1)-326x326.png'
     },
