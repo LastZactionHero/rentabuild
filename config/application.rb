@@ -7,7 +7,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 
-module LocalFavorite
+module Rentabuild
   class Application < Rails::Application
     APP_SETTINGS = YAML.load_file("#{Rails.root}/config/settings.yml")[Rails.env]
 
@@ -25,15 +25,15 @@ module LocalFavorite
 
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
-    config.action_mailer.smtp_settings = {
-      :address   => "smtp.mandrillapp.com",
-      :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
-      :enable_starttls_auto => true, # detects and uses STARTTLS
-      :user_name => "zach@localfavorite.me",
-      :password => APP_SETTINGS["mandrill_api_key"],
-      :authentication => 'plain', # Mandrill supports 'plain' or 'login'
-      :domain => 'localfavorite.me', # your domain to identify your server when connecting
-    }
+    # config.action_mailer.smtp_settings = {
+    #   :address   => "smtp.mandrillapp.com",
+    #   :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
+    #   :enable_starttls_auto => true, # detects and uses STARTTLS
+    #   :user_name => "zach@rentabuild.com",
+    #   :password => APP_SETTINGS["mandrill_api_key"],
+    #   :authentication => 'plain', # Mandrill supports 'plain' or 'login'
+    #   :domain => 'rentabuild.com', # your domain to identify your server when connecting
+    # }
 
     config.generators do |g|
       g.fixture_replacement :factory_girl, dir: 'spec/factories'

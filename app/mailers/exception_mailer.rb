@@ -7,6 +7,6 @@ class ExceptionMailer < ActionMailer::Base
     @message = exception.message
     @backtrace = exception.backtrace.join("\n")
 
-    mail(to: "zdicklin@gmail.com", subject: "Exception: #{@class}")
+    mail(to: "zdicklin@gmail.com", subject: "Rentabuild Exception: #{@class}")
   end
 end
