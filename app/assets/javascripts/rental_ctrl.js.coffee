@@ -301,8 +301,17 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
   $scope.email = null
   $scope.zipcode = null
 
+  mixpanel.track("Landing Page Load");
+
   $scope.rent = ->
     $scope.$broadcast("rented")
+
+    mixpanel.track("Signup", {
+      "printer": $scope.printer.name,
+      "email": $scope.email,
+      "zipcode": $scope.zipcode,
+      "duration": $scope.duration
+      });
 
     $http.post(
       "/landing_page_signups",
@@ -315,6 +324,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
     )
 
   $scope.heroChange = ->
+    mixpanel.track("Hero Change", {"printer": $scope.printer.name});
     $location.hash('rental-form')
     $anchorScroll()
 
