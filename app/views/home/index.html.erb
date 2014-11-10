@@ -16,13 +16,16 @@
         <h2>Top name 3D printers delivered to your door.</h2>                
       </div>
       
-      <div class='col-md-12 hero-rental'>
+      <div class='col-md-4 hero-rental'>
         <h3>I'd like to rent a ...</h3>
+        
         <select class="form-control" 
             ng-model="printer"
             ng-options="printer.name for printer in printers"
             ng-change="heroChange()">
         </select>
+
+        <button type="submit" class="btn btn-primary" ng-click="heroChange()">Rent It!</button>
 
       </div>
 
@@ -58,6 +61,8 @@
       </p>
     </div>
   </div>
+
+  <div class="clearfix"></div>
 
   <div class='landing-panel landing-pricing row' id="rental-form">
     

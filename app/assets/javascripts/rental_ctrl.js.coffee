@@ -116,7 +116,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
       sd: false,
       usb: true,
       website: 'https://store.makerbot.com/replicator',
-      image: 'http://www.r3dprinter.com/wp-content/uploads/2014/02/makerbot-replicator-desktop-3d-printer-5th-generation.jpg'
+      image: 'http://www.3diot.net/wp-content/uploads/1405471228rep5.jpg'
     },
 
     {
@@ -296,7 +296,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
     "3 months"
   ]
 
-  $scope.printer = $scope.printers[0]
+  $scope.printer = $scope.printers[7]
   $scope.duration = $scope.durations[0]
   $scope.email = null
   $scope.zipcode = null
