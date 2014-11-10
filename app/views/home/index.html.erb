@@ -1,0 +1,158 @@
+<div ng-controller="RentalCtrl" class='rental-ctrl'>
+
+  <div class='landing-panel landing-header'>
+    <div class='row'>
+      <div class='col-md-1 pull-right text-right'>
+        &nbsp;
+      </div>
+    </div>
+  </div>
+
+  <div class='landing-panel landing-main'>
+    <div class='row'>
+      
+      <div class='col-md-12'>
+        <h1><%= APP_SETTINGS['application_name'] %></h1>
+        <h2>Top name 3D printers delivered to your door.</h2>                
+      </div>
+      
+      <div class='col-md-12 hero-rental'>
+        <h3>I'd like to rent a ...</h3>
+        <select class="form-control" 
+            ng-model="printer"
+            ng-options="printer.name for printer in printers"
+            ng-change="heroChange()">
+        </select>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class='landing-panel landing-description row'>
+    <div class='col-md-4'>
+      <h3 class='text-center'>Printers are Expensive</h3>
+      <div class='large-icon'>
+        <%= fa_icon 'dollar' %>
+      </div>
+      <p class='text-center'>
+        Start 3D printing for your projects without breaking the bank.
+      </p>
+    </div>
+    <div class='col-md-4'>
+      <h3 class='text-center'>Quality is Unknown</h3>
+      <div class='large-icon'>
+        <%= fa_icon 'star' %>
+      </div>
+      <p class='text-center'>
+        Make sure a 3D printer gets the job done before purchasing.
+      </p>
+    </div>
+    <div class='col-md-4'>
+      <h3 class='text-center'>Design is Iterative</h3>
+      <div class='large-icon'>
+        <%= fa_icon 'refresh' %>
+      </div>
+      <p class='text-center'>
+        Skip expensive 3D printing services- refine your designs and print as much as you need.
+      </p>
+    </div>
+  </div>
+
+  <div class='landing-panel landing-pricing row' id="rental-form">
+    
+    <div class='col-md-12'>
+      <h2>Rent a Printer</h2>  
+    </div>
+
+
+    <div class='col-md-6'>
+      <form role="form">
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">Model</label>
+
+          <select class="form-control" 
+            ng-model="printer"
+            ng-options="printer.name for printer in printers">
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail1">For how long?</label>
+
+          <select class="form-control" 
+            ng-model="duration"
+            ng-options="duration for duration in durations">
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="zipcode">Zipcode</label>
+          <input type="text" class="form-control" id="zipcode" placeholder=""
+            ng-model="zipcode">
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="text" class="form-control" id="email" placeholder=""
+            ng-model="email">
+        </div>
+
+        <button type="submit" class="btn btn-primary" ng-click="rent()">Rent It!</button>
+      </form>
+    </div>
+
+
+    <div class='col-md-6 row selected-printer'>
+      <div class='col-md-12'>
+        <h3>{{printer.name}}</h3>
+      </div>    
+
+      <div class='col-md-8'>      
+        <a target="_blank" href="{{printer.website}}">Manufacture's Website</a>  
+        <table class='table'>    
+          <tr><td width="50%">Build Width</td><td>{{printer.build_width}} mm</td></tr>
+          <tr><td>Build Height</td><td>{{printer.build_height}} mm</td></tr>
+          <tr><td>Build Depth</td><td>{{printer.build_depth}} mm</td></tr>
+          <tr><td>Speed</td><td>{{printer.speed}}</td></tr>
+          <tr><td>Filament</td><td>{{printer.filament}}</td></tr>
+          <tr><td>USB</td><td>{{printer.usb ? "Yes" : "No"}}</td></tr>
+          <tr><td>SD Card</td><td>{{printer.sd ? "Yes" : "No"}}</td></tr>
+          <tr><td>Purchase Price</td><td>{{printer.price | currency : "$"}}</td></tr>          
+        </table>        
+      </div>
+
+      <div class='col-md-4'>        
+        <img src="{{printer.image}}" width="100%"/>
+      </div>
+    </div>
+
+    <div class="modal fade" modal>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Thank you!</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              Thank you for your interest! We're glad you're as excited as we are
+              about getting our hands on 3D printers.
+            </p>
+            <p>
+              Unfortunately, we're still ramping up and are not able to rent this
+              printer right away! We will be in touch when this model is
+              available.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+  </div>
+
+</div>

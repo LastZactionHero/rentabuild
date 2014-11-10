@@ -1,0 +1,209 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+@import "font-awesome";
+@import "bootstrap";
+@import "colors";
+@import "bootstrap3-switch";
+
+//body { padding-top: 70px; }
+html, body {
+  max-width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1 {
+  font-family: 'Poiret One', cursive;
+  font-size: 64px;
+}
+
+h3 {
+  font-style: italic;
+}
+
+.btn-primary {
+  background-color: $color_main_secondary;
+  border-color: $color_main_primary;
+}
+
+.btn-primary:hover {
+  background-color: $color_main_primary;
+  border-color: $color_main_primary;
+}
+
+.btn-primary:active {
+  background-color: $color_main_primary;
+  border-color: $color_main_primary;
+}
+
+.btn-primary:focus {
+  background-color: $color_main_primary;
+  border-color: $color_main_primary;
+}
+
+.body-dashboard {
+  padding-top: 70px;
+}
+
+.devise-panel {
+  h2 {
+    font-size: 20px;
+  }
+
+  .panel-heading {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
+.navbar-theme {
+  background-color: $color_main_primary;
+  border: 0px solid $color_main_secondary;
+  color: white;
+
+  a {
+    color: white;
+  }
+}
+// Landing Page
+.container-landing {
+  width: 100% !important;
+  padding: 0px !important;
+  height: 100%;
+
+  .rental-ctrl {
+    height: 100%;
+  }
+
+  .landing-panel {
+    height: 50%;
+    padding: 36px;
+  }
+
+  .landing-header {
+    height: 36px;
+    background-color: $color_main_dark;
+    color: white;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    a {
+      margin: 0px 16px;
+      color: white;
+    }
+  }
+
+  .landing-main {
+    height: 90%;
+    padding-top: 80px;
+
+    background-color: white;
+    background-image: url("/assets/landing_background.png");
+    background-size: cover;
+
+    color: $color_alternate_primary;
+
+    .hero-rental {
+      margin-top: 24px;
+
+      select {
+        width: 33%;
+        height: 36px;
+        color: $color_main_secondary;
+      }
+    }
+  }
+
+  .landing-description {
+    background-color: white;
+    background-color: $color_background_gray;
+
+    .large-icon {
+      color: $color_main_light;
+      text-align: center;
+      font-size: 64px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+  }
+
+  .landing-pricing {
+    height: auto;
+    //background-color: $color_background_gray;
+    border-bottom: 16px solid $color_main_dark;
+
+    .price-highlight {
+      color: $color_alternate_primary;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+
+    .selected-printer {
+      background-color: white;
+    }
+  }
+
+}
+
+.btn-alternate {
+  background-color: $color_alternate_primary;
+}
+
+.plans-table {
+  border: 1px solid $color_background_gray;
+
+  .plan {
+    padding: 16px 16px 24px 16px;
+    background-color: $color_background_gray;
+
+    h2 {
+      text-align: center;
+    }
+
+    .description {
+      text-align: center;
+    }
+
+    .price {
+      margin: 20px 0px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 36px;
+    }
+
+    .purchase {
+      text-align: center;
+
+      .btn-purchase {
+      }
+    }
+  }
+
+  .plan-current {
+    background-color: white;
+  }
+}
+
+.payment-errors {
+  margin-bottom: 16px;
+  color: red;
+}
