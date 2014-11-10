@@ -73,7 +73,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
       price: 3399.0,
       sd: false,
       usb: true,
-      website: 'http://cubify.com/',
+      website: 'http://cubify.com/en/CubePro/',
       image: "https://dud5umgikjidx.cloudfront.net/resources/images/dropdown/cubepro.png"
     },
 
@@ -87,7 +87,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
       price: 4399.0,
       sd: false,
       usb: true,
-      website: 'http://www.bhphotovideo.com/c/product/1053877-REG/3d_systems_401735_cubepro_trio_3d_printer.html',
+      website: 'http://cubify.com/en/CubePro/',
       image: "https://dud5umgikjidx.cloudfront.net/resources/images/dropdown/cubepro.png"
     },
 
@@ -101,7 +101,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
       price: 2499.0,
       sd: true,
       usb: true,
-      website: 'http://3d-printers.toptenreviews.com/replicator-2x-details.html',
+      website: 'http://store.makerbot.com/replicator2x',
       image: 'http://static.makerwise.com/static/img/3d-printer/orig/310/makerbot-industries-replicator-2x-08.jpg'
     },
 
@@ -283,7 +283,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
       price: 499.0,
       sd: false,
       usb: true,
-      website: 'http://www.amazon.com/XYZprinting-Da-Vinci-1-0-Printer/dp/B00H7VEU0G#product-description-iframe',
+      website: 'http://us.xyzprinting.com/Product',
       image: 'http://ecx.images-amazon.com/images/I/41z6by2EdyL._SX342_.jpg'
     },
 
