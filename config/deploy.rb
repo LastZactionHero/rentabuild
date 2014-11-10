@@ -7,7 +7,7 @@ set :whenever_identifier, defer { "#{application}_#{rails_env}" }
 require "whenever/capistrano"
 
 
-set :application, "local_favorite"
+set :application, "rentabuild"
 set :keep_releases, 5
 
 # set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
@@ -15,13 +15,13 @@ set :keep_releases, 5
 
 set :scm, :git
 set :scm_user, "LastZactionHero"
-set :repository, "git@github.com:LastZactionHero/local_favorite.git"
+set :repository, "git@github.com:LastZactionHero/rentabuild.git"
 ssh_options[:forward_agent] = true
 
 set :user, "root"
-server "localfavorite.yuccasix.com", :app, :web, :db, :primary => true
+server "rentabuild.com", :app, :web, :db, :primary => true
 
-set :application, "local_favorite"
+set :application, "rentabuild"
 set :deploy_to, "/var/www/#{application}"
 
 set :rvm_type, :system
