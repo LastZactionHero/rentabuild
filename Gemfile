@@ -57,5 +57,8 @@ gem 'whenever', '~> 0.9.2'
 gem 'capistrano', '~> 2.15.5', group: :development
 gem 'letter_opener', '~> 1.2.0', group: :development
 gem 'rvm-capistrano', '~> 1.5.1', group: :development
-gem 'rspec-rails', '~> 3.1.0',  group: :test
-gem 'factory_girl_rails', '~> 4.4.1',  group: :test
+
+group :test, :development do
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'factory_girl_rails', '~> 4.4.1'
+end
