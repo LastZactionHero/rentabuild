@@ -38,6 +38,7 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'bootstrap-datepicker-rails', '~> 1.3.0.2'
 gem 'bootstrap-switch-rails', '~> 3.0.0'
 gem 'bootstrap-sass', '~> 3.1.1.1'
 gem 'cancan', '~> 1.6.10'

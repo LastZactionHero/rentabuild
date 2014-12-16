@@ -1,14 +1,11 @@
-rentalApp = angular.module("rentalApp", [])
-
-rentalApp.directive "modal", [ ->
+angular.module('rentalApp.directives').directive "modal", [ ->
   link: (scope, element, attrs) ->
     scope.$on("rented", ->
       $(element).modal({})
     )
 ]
 
-
-rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScroll', ($scope, $http, $location, $anchorScroll) ->
+angular.module('rentalApp.controllers').controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScroll', ($scope, $http, $location, $anchorScroll) ->
 
   $scope.printers = [
     {

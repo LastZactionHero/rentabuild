@@ -14,6 +14,14 @@ Rails.application.routes.draw do
   end
 
   resources :landing_page_signups, only: [:create]
+  resources :rentals, only: [:new] do
+    collection do
+      get 'validate_dates'
+      get 'quote'
+      post 'rent'
+    end
+  end
+  
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

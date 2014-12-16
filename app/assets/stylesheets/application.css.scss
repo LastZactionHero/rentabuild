@@ -12,11 +12,13 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap-datepicker3
  */
 @import "font-awesome";
 @import "bootstrap";
 @import "colors";
 @import "bootstrap3-switch";
+
 
 //body { padding-top: 70px; }
 html, body {
@@ -24,6 +26,10 @@ html, body {
   height: 100%;
   overflow-x: hidden;
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+.container {
+  padding-bottom: 36px;
 }
 
 h1 {

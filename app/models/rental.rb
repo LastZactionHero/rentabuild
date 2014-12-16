@@ -36,6 +36,15 @@ class Rental < ActiveRecord::Base
     end_date + PREP_TIME_DAYS.days
   end
 
+  def self.are_dates_available?(start_date, end_date, id = nil)
+    other_rentals = Rental.where("start_date > ? AND start_date < ? OR end_date > ? AND end_date < ?",
+      start_date - 2 * PREP_TIME_DAYS.days, end_date + 2 * PREP_TIME_DAYS.days,
+      start_date - 2 * PREP_TIME_DAYS.days, end_date + 2 * PREP_TIME_DAYS.days
+    )
+    other_rentals = other_rentals.where("id != ?", id) if id
+    other_rentals.empty?
+  end
+
   private
 
   def start_date_before_end_date
@@ -46,14 +55,8 @@ class Rental < ActiveRecord::Base
 
   def dates_are_available
     return unless start_date && end_date
-
-    other_rentals = Rental.where("start_date > ? AND start_date < ? OR end_date > ? AND end_date < ?",
-      start_date - 2 * PREP_TIME_DAYS.days, end_date + 2 * PREP_TIME_DAYS.days,
-      start_date - 2 * PREP_TIME_DAYS.days, end_date + 2 * PREP_TIME_DAYS.days
-    )
-    other_rentals = other_rentals.where("id != ?", id) if id
-
-    errors.add(:start_date, "is unavailable") if other_rentals.any?
+    errors.add(:start_date, "is unavailable") unless 
+      Rental.are_dates_available?(start_date, end_date, id)
   end
 
 end

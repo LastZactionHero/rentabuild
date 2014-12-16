@@ -3,13 +3,13 @@
 <head>
   <title><%= APP_SETTINGS["application_name"] %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  
+  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js" %>  
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= render partial: 'layouts/analytics' %>
+  <%# render partial: 'layouts/analytics' %>
   <%= csrf_meta_tags %>
 
 </head>
-<body class='body-dashboard'>
+<body class='body-dashboard' ng-app="rentalApp">
 
   <%= render partial: 'layouts/dashboard/navbar' %>
 
@@ -24,6 +24,6 @@
     <%= yield %>
   </div>
 
-  <%= yield :javascript %>
+  <%= yield :javascript %>  
 </body>
 </html>

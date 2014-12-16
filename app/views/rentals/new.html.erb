@@ -1,0 +1,218 @@
+<h2>Rent a Printer</h2>
+
+<div class='alert alert-warning'>
+  Oh no! It looks like we don't have the Cube 3 in stock!
+  Right now, we only carry the Makerbot Replicator 5.
+</div>
+
+<div class="form-horizontal" 
+  role="form" 
+  ng-controller="RentPrinterCtrl">
+
+  <h3>When would you like to rent the printer?</h3>
+  
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
+    <div class="col-sm-2">
+      <p class="input-group">
+        <input type="text" 
+          class="form-control" 
+          datepicker-popup="M/dd/yyyy" 
+          ng-model="startDate" 
+          is-open="showStartDate" 
+          datepicker-options="dateOption"
+          ng-required="true" 
+          ng-change="datesChanged()"
+          close-text="Close" />
+
+        <span class="input-group-btn">
+          <button type="button" 
+            class="btn btn-default" 
+            ng-click="openStartDate($event)">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </p>
+      </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Rental Length</label>
+    <div class="col-sm-2">
+      <select class="form-control" ng-model="rentalDays" ng-change="datesChanged()">
+        <option value="7">7 Days</option>
+        <option value="14">14 Days</option>
+        <option value="21">21 Days</option>
+        <option value="30">30 Days</option>
+      </select>
+    </div>
+  </div>
+
+  <div class='alert alert-warning' ng-show="dateError">
+    {{dateError}}
+    <ul ng-show="suggestedDates">
+      <li ng-repeat="date in suggestedDates">
+        {{date.start_date | date: "M/dd/yyyy"}} to {{date.end_date | date: "M/dd/yyyy"}}
+      </li>
+    </ul>
+  </div>
+  <div class='alert alert-success' ng-show="datesOk">
+    These dates are available!
+  </div>
+
+  <h3>Where are you located?</h3>
+  <div class="form-group">
+    <div class="radio col-sm-offset-2 col-sm-10">
+      <label>
+        <input type="radio" name="optionsRadios" id="optionsRadios1" value="local" ng-model="shipping" ng-change="datesChanged()">
+        Denver/Boulder Area (Free delivery and pickup)
+      </label>
+    </div>
+    <div class="radio col-sm-offset-2 col-sm-10">
+      <label>
+        <input type="radio" name="optionsRadios" id="optionsRadios2" value="national" ng-model="shipping" ng-change="datesChanged()">
+        United States (+$50 shipping)
+      </label>
+    </div>
+  </div>
+
+  <h3>Your Info</h3>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" placeholder="Full Name" ng-model="name">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="your@email.com" ng-model="email">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Phone</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="333-444-5678" ng-model="phone">
+    </div>
+  </div>    
+
+  <h3>Shipping Address</h3>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Address 1</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="" ng-model="addressLine1">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Address 2</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="" ng-model="addressLine2">
+    </div>
+  </div>  
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Unit/Apartment</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="" ng-model="addressUnit">
+    </div>
+  </div> 
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Zipcode</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputEmail3" placeholder="" ng-model="zipcode">
+    </div>
+  </div>  
+
+  <h3>Total</h3>
+  <div ng-show="quote">
+    <div class='row'>
+      <div class='col-sm-2 col-sm-offset-2'>Printer Model:</div>
+      <div class='col-sm-8'>{{quote.model}}</div>
+    </div>
+    <div class='row'>
+      <div class='col-sm-2 col-sm-offset-2'>Rental Dates</div>
+      <div class='col-sm-8'>{{startDate | date: "M/dd/yyyy" }} for {{rentalDays}} days</div>
+    </div>
+    <div class='row'>
+      <div class='col-sm-2 col-sm-offset-2'>Rental Cost</div>
+      <div class='col-sm-8'>${{quote.rental_cost}}</div>
+    </div>
+    <div class='row'>
+      <div class='col-sm-2 col-sm-offset-2'>Shipping</div>
+      <div class='col-sm-8'>${{quote.shipping_cost}}</div>
+    </div>
+    <div class='row'>
+      <div class='col-sm-2 col-sm-offset-2'>Total</div>
+      <div class='col-sm-8'>${{quote.total_cost}}</div>
+    </div>  
+  </div>
+
+  <h3>Credit Card</h3>
+
+  <div class="alert alert-warning" ng-show="paymentError">
+    {{paymentError}}
+  </div>
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Card Number</label>
+    <div class="col-sm-4">
+      <input type="text" 
+        class="form-control" 
+        id="inputEmail3" 
+        placeholder="Card Number" 
+        size="20" 
+        data-stripe="number"
+        ng-model="cardNumber">
+    </div>
+  </div> 
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">CVC</label>
+    <div class="col-sm-2">
+      <input type="text" 
+        class="form-control" 
+        id="inputEmail3" 
+        placeholder="CVC" 
+        size="4" 
+        data-stripe="cvc"
+        ng-model="cardCVC">
+    </div>
+  </div> 
+
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Expiration</label>
+    <div class="col-sm-2">
+      <input type="text" 
+        class="form-control" 
+        id="inputEmail3" 
+        placeholder="MM" 
+        size="2" 
+        data-stripe="exp-month"
+        ng-model="cardMonth">
+    </div>
+    <div class="col-sm-2">
+      <input 
+        type="text" 
+        class="form-control" 
+        id="inputEmail3" 
+        placeholder="YYYY" 
+        size="4" 
+        data-stripe="exp-year"
+        ng-model="cardYear">
+    </div>
+  </div> 
+
+  <div class='alert alert-warning' ng-show="missingFields">
+    Looks like we're missing some info: {{missingFields}}
+  </div>
+
+  <div class='row'>
+    <div class='col-sm-4 col-sm-offset-2'>
+      <a class='btn btn-success' ng-click="rent()">Rent It!</a>
+    </div>
+  </div>
+
+</div>
+
+<%= content_for :javascript do %>
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<% end %>
