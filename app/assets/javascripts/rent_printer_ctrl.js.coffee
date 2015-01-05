@@ -12,6 +12,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
 
   $scope.paymentError = null
   $scope.submitting = false
+  $scope.termsOfService = false
 
   $scope.datesChanged = ->
     $scope.dateError = null
@@ -37,8 +38,12 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
 
     )    
 
-  $scope.rent = ->
+  $scope.rent = -> 
     $scope.paymentError = null
+    unless $scope.termsOfService
+      $scope.paymentError = "You must agree to the terms of service."
+      return
+    
     if($scope.validateFields() && $scope.quote)
       $scope.submitting = true
       $scope.stripeCreateToken()      

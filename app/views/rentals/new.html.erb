@@ -146,11 +146,9 @@
     </div>  
   </div>
 
+
   <h3>Credit Card</h3>
 
-  <div class="alert alert-warning" ng-show="paymentError">
-    {{paymentError}}
-  </div>
 
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Card Number</label>
@@ -201,8 +199,26 @@
     </div>
   </div> 
 
+  <h3>Terms and Conditions</h3>
+
+  <div class='tos-window'>
+    <%= render partial: "/rentals/agreement_text" %>
+  </div>
+  <div>
+    <%= link_to "View Full Terms of Service", agreement_rentals_path, target: :blank %>
+  </div>
+  <div>
+     <input type="checkbox" name="tos" value="tos" ng-model="termsOfService">&nbsp;&nbsp;I agree to the Terms of Service.
+  </div>
+
+  <hr/>
+
   <div class='alert alert-warning' ng-show="missingFields">
     Looks like we're missing some info: {{missingFields}}
+  </div>
+  
+  <div class="alert alert-warning" ng-show="paymentError">
+    {{paymentError}}
   </div>
 
   <div class='row'>

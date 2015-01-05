@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       get 'quote'
       post 'rent'
       get 'success'
+      get 'agreement'
     end
   end
   

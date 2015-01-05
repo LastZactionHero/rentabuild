@@ -93,6 +93,10 @@ class RentalsController < ApplicationController
 
   end
   
+  def agreement
+
+  end
+  
   private
 
   def find_dates_or_fail

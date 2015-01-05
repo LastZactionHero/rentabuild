@@ -25,24 +25,10 @@
             </li>
           <% end %>
 
-        <% end %>
-        <li>
-          <%= link_to raw("#{fa_icon('bar-chart-o')} Plans"), plans_path %>
-        </li>
+        <% end %>    
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <% if current_user %>
-          <li>
-            <%= link_to current_user, profile_index_path %>
-          </li>
-          <li>
-            <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
-          </li>
-        <% else %>
-          <li>
-            <%= link_to "Sign In", new_user_session_path %>
-          </li>
-        <% end %>
+
       </ul>
     </div><!-- /.navbar-collapse -->
 
