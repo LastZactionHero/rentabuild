@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141214165729) do
+ActiveRecord::Schema.define(version: 20141216150556) do
 
   create_table "landing_page_signups", force: true do |t|
     t.string   "email"
@@ -36,6 +36,18 @@ ActiveRecord::Schema.define(version: 20141214165729) do
     t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "duration"
+    t.string   "shipping"
+    t.string   "name"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "address_line_1"
+    t.string   "address_line_2"
+    t.string   "unit"
+    t.string   "zipcode"
+    t.string   "stripe_card_token"
+    t.string   "stripe_charge_id"
+    t.decimal  "amount"
   end
 
   create_table "user_plans", force: true do |t|

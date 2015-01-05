@@ -120,4 +120,79 @@ describe RentalsController do
 
   end
 
+  describe 'rent' do
+    let(:start_date){DateTime.parse("February 1, 2015")}
+    let(:duration){7}
+    let(:shipping){"national"}
+    let(:name){"Printer Renterson"}
+    let(:email){"printer@rental.com"}
+    let(:address_line_1){"368 W Cherrywood"}
+    let(:zipcode){80026}
+    let(:phone){"317-496-8472"}
+    let(:stripe_card_token){"tok_15HR1B4yIhAxEA8eCYJjjuth"}
+
+    it 'responds with an error if date and duration are not provided' do
+      post 'rent'
+      expect(response.status).to eq(400)
+      body = JSON.parse(response.body)
+      expect(body["error"]).to eq("Start date and duration must be present")
+    end
+
+    it 'responds with an error if shipping is not provided' do
+      post 'rent', start_date: start_date, duration: duration
+
+      expect(response.status).to eq(400)
+      body = JSON.parse(response.body)
+      expect(body["errors"]["shipping"]).to eq("is not valid")
+    end
+
+    it 'responds with an error if contact information is not provided' do
+      post 'rent', start_date: start_date, duration: duration, shipping: shipping
+
+      expect(response.status).to eq(400)
+      body = JSON.parse(response.body)
+      expect(body["errors"]).to include("Name can't be blank")
+      expect(body["errors"]).to include("Phone can't be blank")
+      expect(body["errors"]).to include("Email can't be blank")
+      expect(body["errors"]).to include("Address line 1 can't be blank")
+      expect(body["errors"]).to include("Zipcode can't be blank")
+      expect(body["errors"]).to include("Stripe card token can't be blank")
+    end
+
+    it 'responds with an error if dates are not available' do
+      FactoryGirl.create(:rental, start_date: start_date, end_date: start_date + duration.day)
+
+      post 'rent', start_date: start_date, 
+        duration: duration, 
+        shipping: shipping,
+        name: name,
+        phone: phone,
+        email: email,
+        address_line_1: address_line_1,
+        zipcode: zipcode,
+        stripe_card_token: stripe_card_token
+
+      expect(response.status).to eq(400)
+      body = JSON.parse(response.body)
+      expect(body["errors"]).to include("Start date is unavailable")
+    end
+
+    it 'successfully creates a rental' do
+      VCR.use_cassette("successful_rental") do
+        post 'rent', start_date: start_date, 
+          duration: duration, 
+          shipping: shipping,
+          name: name,
+          phone: phone,
+          email: email,
+          address_line_1: address_line_1,
+          zipcode: zipcode,
+          stripe_card_token: stripe_card_token
+
+        expect(response.status).to eq(200)
+      end
+    end
+    
+  end
+
 end

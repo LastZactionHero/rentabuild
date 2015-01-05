@@ -4,6 +4,16 @@ class Rental < ActiveRecord::Base
   validate :start_date_before_end_date
   validate :dates_are_available
 
+  validates_presence_of :duration
+  validates_presence_of :shipping
+  validates_presence_of :name
+  validates_presence_of :email
+  validates_presence_of :phone
+  validates_presence_of :address_line_1  
+  validates_presence_of :zipcode
+  validates_presence_of :stripe_card_token
+  validates_presence_of :amount
+
   PREP_TIME_DAYS = 4
 
   def self.rental_windows(start_date, end_date, minimum_days = 7)

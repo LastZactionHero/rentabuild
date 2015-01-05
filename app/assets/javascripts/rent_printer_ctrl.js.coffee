@@ -10,19 +10,8 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
   $scope.dateError = null
   $scope.datesOk = false
 
-  # $scope.name = "x"
-  # $scope.addressLine1 = "1"
-  # $scope.email = "x"
-  # $scope.phone = "x"
-  # $scope.zipcode = "1"
-  # $scope.shipping = "local"
-  # $scope.rentalDays = 7
-  # $scope.cardNumber = "4242424242424242"
-  # $scope.cardCVC = "123"
-  # $scope.cardMonth = "12"
-  # $scope.cardYear = "2015"
-
   $scope.paymentError = null
+  $scope.submitting = false
 
   $scope.datesChanged = ->
     $scope.dateError = null
@@ -50,11 +39,12 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
 
   $scope.rent = ->
     $scope.paymentError = null
-
     if($scope.validateFields() && $scope.quote)
+      $scope.submitting = true
       $scope.stripeCreateToken()      
 
   $scope.stripeCreateToken = ->
+    $scope.submitting = true
     Stripe.setPublishableKey('pk_test_lHvqaoJXXkyU2QpUHzsoNtsH');
 
     Stripe.card.createToken({
@@ -67,6 +57,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
   $scope.stripeResponseHandler = (status, response) ->  
     if response.error
       $timeout( ->
+        $scope.submitting = false
         $scope.paymentError = response.error.message
       )
     else
@@ -76,7 +67,25 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
     return
 
   $scope.requestRental = (stripeToken) ->
-    console.log("Requesting rental with stripe token " + stripeToken)
+    $http.post("/rentals/rent",
+      {
+        start_date: $scope.startDate,
+        duration: $scope.rentalDays,
+        shipping: $scope.shipping,
+        name: $scope.name,
+        email: $scope.email,
+        phone: $scope.phone,
+        address_line_1: $scope.addressLine1,
+        address_line_2: $scope.addressLine2,
+        zipcode: $scope.zipcode,
+        stripe_card_token: stripeToken
+      }
+    ).success(->
+      window.location = "/rentals/success"
+    ).error( (data) ->
+      $scope.paymentError = data.errors
+      $scope.submitting = false
+    )
 
 
   $scope.getQuote = (duration, shipping) ->

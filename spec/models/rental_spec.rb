@@ -89,19 +89,44 @@ RSpec.describe Rental, :type => :model do
     it 'creates a rental' do
       start_date = "March 3, 2015"
       end_date = "March 15, 2015"
-      rental = Rental.create(start_date: start_date, end_date: end_date)
+      rental = Rental.create(
+        start_date: start_date, 
+        end_date: end_date,
+        duration: 6,
+        shipping: 'local',
+        name: 'Printer Renterson',
+        email: 'printer@rental.com',
+        phone: '317-496-8472',
+        address_line_1: '368 W Cherrywood Dr',
+        zipcode: '80026',
+        stripe_card_token: 'tok_123',
+        stripe_charge_id: 'ch_123',
+        amount: 200.00
+        )
       expect(rental).to be_valid
     end
 
     it 'creates a second rental with a valid date range' do
       start_date = "March 3, 2015"
       end_date = "March 15, 2015"
-      rental = Rental.create(start_date: start_date, end_date: end_date)
+      rental = FactoryGirl.create(:rental, start_date: start_date, end_date: end_date)
       expect(rental).to be_valid
 
       start_date = "March 31, 2015"
-      end_date = "April 10, 2015"
-      rental = Rental.create(start_date: start_date, end_date: end_date)
+      end_date = "April 10, 2015"      
+      rental = Rental.create(
+        start_date: start_date, 
+        end_date: end_date,
+        duration: 6,
+        shipping: 'local',
+        name: 'Printer Renterson',
+        email: 'printer@rental.com',
+        phone: '317-496-8472',
+        address_line_1: '368 W Cherrywood Dr',
+        zipcode: '80026',
+        stripe_card_token: 'tok_123',
+        stripe_charge_id: 'ch_123',
+        amount: 200.00)        
       expect(rental).to be_valid      
     end
 

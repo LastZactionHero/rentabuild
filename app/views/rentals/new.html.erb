@@ -1,15 +1,15 @@
 <h2>Rent a Printer</h2>
 
-<div class='alert alert-warning'>
+<!-- <div class='alert alert-warning'>
   Oh no! It looks like we don't have the Cube 3 in stock!
   Right now, we only carry the Makerbot Replicator 5.
 </div>
-
+ -->
 <div class="form-horizontal" 
   role="form" 
   ng-controller="RentPrinterCtrl">
 
-  <h3>When would you like to rent the printer?</h3>
+  <h3>When would you like to rent the Makerbot Replicator 5?</h3>
   
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
@@ -207,7 +207,7 @@
 
   <div class='row'>
     <div class='col-sm-4 col-sm-offset-2'>
-      <a class='btn btn-success' ng-click="rent()">Rent It!</a>
+      <a class='btn btn-success' ng-click="rent()" ng-hide="submitting">Rent It!</a>
     </div>
   </div>
 
