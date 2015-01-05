@@ -98,8 +98,8 @@ describe RentalsController do
       expect(response).to be_success
 
       body = JSON.parse(response.body)
-      expect(body["rental_cost"]).to eq(450.00)
-      expect(body["total_cost"]).to eq(450.00)
+      expect(body["rental_cost"]).to eq(400.00)
+      expect(body["total_cost"]).to eq(400.00)
       expect(body["model"]).to eq("Makerbot Replicator 5")
       expect(body["shipping_cost"]).to eq(0)
     end

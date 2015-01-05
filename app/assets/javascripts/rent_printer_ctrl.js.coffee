@@ -45,7 +45,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
 
   $scope.stripeCreateToken = ->
     $scope.submitting = true
-    Stripe.setPublishableKey('pk_test_lHvqaoJXXkyU2QpUHzsoNtsH');
+    Stripe.setPublishableKey('pk_live_JMNFrzKGf9KRDiSOmj3PMo6w');
 
     Stripe.card.createToken({
       number: $scope.cardNumber,
