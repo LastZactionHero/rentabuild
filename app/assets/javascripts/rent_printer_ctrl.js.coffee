@@ -3,7 +3,7 @@ rentalApp = angular.module("rentalApp", ['ui.bootstrap'])
 angular.module('rentalApp.controllers', []);
 angular.module('rentalApp.directives', []);
 
-rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope, $http, $timeout) ->
+rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$location', ($scope, $http, $timeout, $location) ->
   $scope.startDate = null
   $scope.rentalDays = null
   $scope.showStartDate = false
@@ -14,11 +14,24 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
   $scope.submitting = false
   $scope.termsOfService = false
 
+  $scope.requestedModel = $location.search()['model'];
+  $scope.email = $location.search()['email'];
+  $scope.zipcode = $location.search()['zipcode'];
+
+  mixpanel.track("View Rental Page", {
+    "model": $scope.requestedModel
+  });
+
   $scope.datesChanged = ->
     $scope.dateError = null
     $scope.datesOk = false
     $scope.suggestedDates = null
     return unless $scope.startDate && $scope.rentalDays
+
+    mixpanel.track("Dates Changed", {
+      "start_date": $scope.start_date,
+      "duration": $scope.rentalDays
+      });
 
     now = new Date()
     if($scope.startDate < now)
@@ -72,6 +85,8 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
     return
 
   $scope.requestRental = (stripeToken) ->
+    mixpanel.track("Rented");
+
     $http.post("/rentals/rent",
       {
         start_date: $scope.startDate,
@@ -127,21 +142,6 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', ($scope,
 
 ]
 
-
-
-# angular.module('rentalApp.directives').directive "modal", [ ->
-#   link: (scope, element, attrs) ->
-#     scope.$on("rented", ->
-#       $(element).modal({})
-#     )
-# ]
-
-rentalApp.directive "modal", [->
-  link: (scope, element, attrs) ->
-    scope.$on("rented", ->
-      $(element).modal({})
-    )
-]
 
 rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScroll', ($scope, $http, $location, $anchorScroll) ->
 
@@ -439,7 +439,6 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
   mixpanel.track("Landing Page Load");
 
   $scope.rent = ->
-    $scope.$broadcast("rented")
 
     mixpanel.track("Signup", {
       "printer": $scope.printer.name,
@@ -456,6 +455,17 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
         zipcode: $scope.zipcode,
         model_name: $scope.printer.name
       }
+    ).success( ->      
+      url = "/rentals/new#"
+      url += "?model=" + encodeURIComponent($scope.printer.name)
+
+      if $scope.email
+        url += "&email=" + encodeURIComponent($scope.email)
+
+      if $scope.zipcode
+        url += "&zipcode=" + encodeURIComponent($scope.zipcode)
+
+      window.location = url
     )
 
   $scope.heroChange = ->

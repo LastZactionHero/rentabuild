@@ -1,13 +1,14 @@
 <h2>Rent a Printer</h2>
 
-<!-- <div class='alert alert-warning'>
-  Oh no! It looks like we don't have the Cube 3 in stock!
-  Right now, we only carry the Makerbot Replicator 5.
-</div>
- -->
+
 <div class="form-horizontal" 
   role="form" 
   ng-controller="RentPrinterCtrl">
+
+  <div class='alert alert-danger' ng-if="requestedModel && requestedModel != 'Makerbot Replicator 5'">
+    Sorry, but we do not yet stock the {{requestedModel}}. We currently rent the Makerbot Replicator 5.
+  </div>
+
 
   <h3>When would you like to rent the Makerbot Replicator 5?</h3>
   
