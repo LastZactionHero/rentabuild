@@ -58,7 +58,7 @@ describe RentalsController do
       body = JSON.parse(response.body)
       expect(body["rental_cost"]).to eq(150.00)
       expect(body["total_cost"]).to eq(150.00)
-      expect(body["model"]).to eq("Makerbot Replicator 5")
+      expect(body["model"]).to eq("Ultimaker II")
       expect(body["shipping_cost"]).to eq(0)
     end
 
@@ -72,7 +72,7 @@ describe RentalsController do
       body = JSON.parse(response.body)
       expect(body["rental_cost"]).to eq(250.00)
       expect(body["total_cost"]).to eq(250.00)
-      expect(body["model"]).to eq("Makerbot Replicator 5")
+      expect(body["model"]).to eq("Ultimaker II")
       expect(body["shipping_cost"]).to eq(0)
     end
 
@@ -86,7 +86,7 @@ describe RentalsController do
       body = JSON.parse(response.body)
       expect(body["rental_cost"]).to eq(350.00)
       expect(body["total_cost"]).to eq(350.00)
-      expect(body["model"]).to eq("Makerbot Replicator 5")
+      expect(body["model"]).to eq("Ultimaker II")
       expect(body["shipping_cost"]).to eq(0)
     end
 
@@ -100,7 +100,7 @@ describe RentalsController do
       body = JSON.parse(response.body)
       expect(body["rental_cost"]).to eq(400.00)
       expect(body["total_cost"]).to eq(400.00)
-      expect(body["model"]).to eq("Makerbot Replicator 5")
+      expect(body["model"]).to eq("Ultimaker II")
       expect(body["shipping_cost"]).to eq(0)
     end
 
@@ -113,7 +113,7 @@ describe RentalsController do
 
       body = JSON.parse(response.body)
       expect(body["rental_cost"]).to eq(150.0)
-      expect(body["model"]).to eq("Makerbot Replicator 5")
+      expect(body["model"]).to eq("Ultimaker II")
       expect(body["shipping_cost"]).to eq(50.00)
       expect(body["total_cost"]).to eq(200.00)
     end

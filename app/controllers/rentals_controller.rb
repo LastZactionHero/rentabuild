@@ -22,7 +22,7 @@ class RentalsController < ApplicationController
 
   def quote    
     render status: 200, json: {
-      model: "Makerbot Replicator 5",
+      model: "Ultimaker II",
       shipping_cost: @shipping_cost,
       rental_cost: @rental_cost,
       total_cost: @total_cost

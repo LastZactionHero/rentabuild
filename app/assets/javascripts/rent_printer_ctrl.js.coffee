@@ -431,7 +431,7 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
     "3 months"
   ]
 
-  $scope.printer = $scope.printers[7]
+  $scope.printer = $scope.printers[14]
   $scope.duration = $scope.durations[0]
   $scope.email = null
   $scope.zipcode = null
