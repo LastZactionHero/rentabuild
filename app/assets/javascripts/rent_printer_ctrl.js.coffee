@@ -344,12 +344,12 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
       build_height: 229.87,
       build_width: 224,
       speed: '30 mm/s - 300 mm/s'
-      filament: 'PLA',
+      filament: 'PLA, ABS, UPET',
       price: 2500.0,
       sd: true,
       usb: true,
       website: 'https://www.ultimaker.com/',
-      image: 'https://d274pdkuk9fmjq.cloudfront.net/spree/uploads/81/medium/Stylish-looks.png'
+      image: 'https://www.dynamism.com/img/ultimaker_2-2.png'
     },
 
     {
@@ -425,10 +425,10 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
   ]
 
   $scope.durations = [
-    "1 week",
-    "3 weeks",
-    "1 month",
-    "3 months"
+    "1 week ($150)",
+    "2 weeks ($250)",
+    "3 weeks ($350)",
+    "1 month ($450)"
   ]
 
   $scope.printer = $scope.printers[14]
@@ -473,4 +473,14 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
     $location.hash('rental-form')
     $anchorScroll()
 
+  $scope.getStarted = ->
+    mixpanel.track("Get Started", {"printer": $scope.printer.name});
+    $location.hash('rental-form')
+    $anchorScroll()
+
+  $scope.somethingElse = false;
+
+  $scope.selectDifferent = ->
+    mixpanel.track("Select Different", {"printer": $scope.printer.name});
+    $scope.somethingElse = true;
 ]

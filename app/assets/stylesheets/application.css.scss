@@ -136,7 +136,6 @@ h3 {
       button {
         width: 25%;
         float: left;
-        margin-left: 12px;
       }
     }
   }
@@ -172,6 +171,10 @@ h3 {
 
     .selected-printer {
       background-color: white;
+
+      ul.included-in-rental {
+        margin-left: 20px;
+      }
     }
   }
 
@@ -234,4 +237,12 @@ pre.tos {
   overflow: scroll;
   background-color: #F0F0F0;
   padding: 8px;
+}
+
+.rental-instructions {
+  ul {
+    li {
+   
+    }
+  }
 }

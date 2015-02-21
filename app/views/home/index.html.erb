@@ -9,16 +9,30 @@
       </div>
       
       <div class='col-md-4 hero-rental'>
-        <h3>I'd like to rent a ...</h3>
+        <div class='row' ng-hide="somethingElse">
+          <div class='col-md-12'>
+            <h3>Rent the Ultimaker II for as low as $100/week.</h3>
+            <button type="submit" class="btn btn-primary" ng-click="getStarted()">Get Started</button>
+          </div>
+        </div>
         
-        <select class="form-control" 
-            ng-model="printer"
-            ng-options="printer.name for printer in printers"
-            ng-change="heroChange()">
-        </select>
+        <div class='row' ng-hide="somethingElse">
+          <div class='col-md-12'><br/>
+            <a ng-click="selectDifferent()">Want something different?</a>
+          </div>
+        </div>
 
-        <button type="submit" class="btn btn-primary" ng-click="heroChange()">Next</button>
+        <div ng-show="somethingElse">
+          <h3>I'd like to rent a ...</h3>
+          
+          <select class="form-control" 
+              ng-model="printer"
+              ng-options="printer.name for printer in printers"
+              ng-change="heroChange()">
+          </select>
 
+          <button type="submit" class="btn btn-primary" ng-click="heroChange()">Next</button>
+        </div>
       </div>
 
     </div>
@@ -69,9 +83,14 @@
         <div class="form-group">
           <label for="exampleInputEmail1">Model</label>
 
+          <div ng-hide="somethingElse">
+            {{printer.name}}
+          </div>
+
           <select class="form-control" 
             ng-model="printer"
-            ng-options="printer.name for printer in printers">
+            ng-options="printer.name for printer in printers"
+            ng-show="somethingElse">
           </select>
         </div>
 
@@ -98,10 +117,20 @@
 
         <button type="submit" class="btn btn-primary" ng-click="rent()">Next</button>
       </form>
+
     </div>
 
 
     <div class='col-md-6 row selected-printer'>
+      <h2 class='col-md-12'>Included in your Rental:</h2>
+      <ul class='col-md-12 included-in-rental'>
+        <li>3D Printer - Shipped to your Door</li>
+        <li>1/2 lb PLA Filament</li>        
+        <li>Resources for Getting Started</li>
+        <li>Troubleshooting and Support by Phone or Email</li>
+        <li>Return Shipping Label</li>
+      </ul>
+
       <div class='col-md-12'>
         <h3>{{printer.name}}</h3>
       </div>    
@@ -109,13 +138,14 @@
       <div class='col-md-8'>      
         <a target="_blank" href="{{printer.website}}">Manufacture's Website</a>  
         <table class='table'>    
-          <tr><td width="50%">Build Width</td><td>{{printer.build_width}} mm</td></tr>
-          <tr><td>Build Height</td><td>{{printer.build_height}} mm</td></tr>
-          <tr><td>Build Depth</td><td>{{printer.build_depth}} mm</td></tr>
+          <tr><td width="50%">Build Dimensions</td>
+            <td>
+              {{printer.build_width}} mm x {{printer.build_depth}} mm x {{printer.build_height}} mm
+            </td>
+          </tr>
           <tr><td>Speed</td><td>{{printer.speed}}</td></tr>
           <tr><td>Filament</td><td>{{printer.filament}}</td></tr>
-          <tr><td>USB</td><td>{{printer.usb ? "Yes" : "No"}}</td></tr>
-          <tr><td>SD Card</td><td>{{printer.sd ? "Yes" : "No"}}</td></tr>
+          <tr><td>Connection</td><td>{{printer.usb ? "USB" : ""}} {{printer.sd ? "SD" : ""}}</td></tr>
           <tr><td>Purchase Price</td><td>{{printer.price | currency : "$"}}</td></tr>          
         </table>        
       </div>

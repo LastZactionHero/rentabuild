@@ -1,5 +1,33 @@
-<h2>Rent a Printer</h2>
+<div class='well rental-instructions'>
+  <h2>How does the Rental Work?</h2>
+  <hr/>
+  <ul>
+    <li>
+      <h3>We ship the printer to your door</h3>
+      <p>We will ship to arrive on the date you request.</p>    
+    </li>
+    <li>
+      <h3>Print as much as you want</h3>
+      <ul>
+        <li>We include <strong>1/2 lb PLA filament</strong>, yours to use at <strong>no extra charge</strong>.
+        <li>Free support and assistance by phone or email.</li>
+        <li>'Getting Started' information to start printing fast</li>
+      </ul>
+    </li>
+    <li>
+      <h3>Ship it back when your rental is finished</h3>
+      <p>Attach the return shipping label and drop off at a FedEx location.</p>
+    </li>
+  </ul>
 
+  <hr/>
+
+  <h4 class='text-center'>Stil have questions? <%= mail_to "zach@rentabuild.com", "Email us!" %></h4>
+</div>
+
+
+
+<h2>Rent a Printer</h2>
 
 <div class="form-horizontal" 
   role="form" 
@@ -12,6 +40,18 @@
 
   <h3>When would you like to rent the Ultimaker II?</h3>
   
+  <div class="form-group">
+    <label for="inputEmail3" class="col-sm-2 control-label">Rental Length</label>
+    <div class="col-sm-2">
+      <select class="form-control" ng-model="rentalDays" ng-change="datesChanged()">
+        <option value="7">7 Days ($150)</option>
+        <option value="14">14 Days ($250)</option>
+        <option value="21">21 Days ($350)</option>
+        <option value="30">30 Days ($450)</option>
+      </select>
+    </div>
+  </div>
+
   <div class="form-group">
     <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
     <div class="col-sm-2">
@@ -37,18 +77,6 @@
       </div>
   </div>
 
-  <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Rental Length</label>
-    <div class="col-sm-2">
-      <select class="form-control" ng-model="rentalDays" ng-change="datesChanged()">
-        <option value="7">7 Days</option>
-        <option value="14">14 Days</option>
-        <option value="21">21 Days</option>
-        <option value="30">30 Days</option>
-      </select>
-    </div>
-  </div>
-
   <div class='alert alert-warning' ng-show="dateError">
     {{dateError}}
     <ul ng-show="suggestedDates">
@@ -60,6 +88,8 @@
   <div class='alert alert-success' ng-show="datesOk">
     These dates are available!
   </div>
+
+  <%= mail_to "zach@rentabuild.com", "Need help?"%>
 
   <h3>Where are you located?</h3>
   <div class="form-group">
