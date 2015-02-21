@@ -235,3 +235,14 @@ pre.tos {
   background-color: #F0F0F0;
   padding: 8px;
 }
+
+ul.prices {
+  list-style: none;
+  background-color: $color_alternate_secondary;
+  margin: 0px;
+  padding: 0px;
+
+  li {
+    margin: 16px 0px;
+  }
+}
