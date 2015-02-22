@@ -11,28 +11,10 @@
       <div class='col-md-4 hero-rental'>
         <div class='row' ng-hide="somethingElse">
           <div class='col-md-12'>
-            <h3>Rent the Ultimaker II for as low as $100/week.</h3>
             <button type="submit" class="btn btn-primary" ng-click="getStarted()">Get Started</button>
           </div>
         </div>
         
-        <div class='row' ng-hide="somethingElse">
-          <div class='col-md-12'><br/>
-            <a ng-click="selectDifferent()">Want something different?</a>
-          </div>
-        </div>
-
-        <div ng-show="somethingElse">
-          <h3>I'd like to rent a ...</h3>
-          
-          <select class="form-control" 
-              ng-model="printer"
-              ng-options="printer.name for printer in printers"
-              ng-change="heroChange()">
-          </select>
-
-          <button type="submit" class="btn btn-primary" ng-click="heroChange()">Next</button>
-        </div>
       </div>
 
     </div>
@@ -84,7 +66,8 @@
           <label for="exampleInputEmail1">Model</label>
 
           <div ng-hide="somethingElse">
-            {{printer.name}}
+            {{printer.name}}<br/>
+            <a ng-click="selectDifferent()">Want something different?</a>
           </div>
 
           <select class="form-control" 
