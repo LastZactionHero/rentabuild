@@ -425,10 +425,10 @@ rentalApp.controller "RentalCtrl", ['$scope', '$http', '$location', '$anchorScro
   ]
 
   $scope.durations = [
-    "1 week ($150)",
-    "2 weeks ($250)",
-    "3 weeks ($350)",
-    "1 month ($450)"
+    "1 week",
+    "2 weeks",
+    "3 weeks",
+    "1 month"
   ]
 
   $scope.printer = $scope.printers[14]
