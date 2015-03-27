@@ -28,7 +28,10 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     else if step == "shipping" 
       valid = $scope.validateShipping()
 
-    $scope.currentStepId += 1 if valid
+    if valid
+      $scope.currentStepId += 1 
+      mixpanel.track($scope.currentStep());
+
 
   $scope.prevStep = ->
     $scope.currentStepId -= 1  
@@ -74,9 +77,9 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
   $scope.email = $location.search()['email'];
   $scope.zipcode = $location.search()['zipcode'];
 
-  # mixpanel.track("View Rental Page", {
-  #   "model": $scope.requestedModel
-  # });
+  mixpanel.track("View Rental Page", {
+    "model": $scope.requestedModel
+  });
 
   $scope.datesChanged = ->
     $scope.dateError = null
@@ -84,10 +87,10 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     $scope.suggestedDates = null
     return unless $scope.startDate && $scope.rentalDays
 
-    # mixpanel.track("Dates Changed", {
-    #   "start_date": $scope.start_date,
-    #   "duration": $scope.rentalDays
-    #   });
+    mixpanel.track("Dates Changed", {
+      "start_date": $scope.start_date,
+      "duration": $scope.rentalDays
+      });
 
     now = new Date()
     if($scope.startDate < now)
@@ -144,7 +147,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     return
 
   $scope.requestRental = (stripeToken) ->
-    # mixpanel.track("Rented");
+    mixpanel.track("Rented");
 
     $http.post("/rentals/rent",
       {
@@ -200,6 +203,10 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     $scope.showStartDate = true;
 
   $scope.postSignup = ->
+    mixpanel.track("Posted Signup", {
+      "email": $scope.email,
+    });
+
     $http.post(
       "/landing_page_signups",
       {
