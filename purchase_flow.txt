@@ -1,0 +1,32 @@
+1. Get Started
+
+- Email Address
+- Zipcode
+
+[Rent a Printer] [I just want more info] 
+
+
+2. When do you want to rent it?
+
+Ultimaker II
+
+- Duration picker
+- Date picker
+
+3. Where are we shipping it?
+
+- Denver/National
+- Name
+- Phone
+- Address
+- Zipcode
+
+4. Totals
+
+- Item Cost
+- Cost
+
+- Credit Card Info
+- Terms of Service
+
+5. Checkout!

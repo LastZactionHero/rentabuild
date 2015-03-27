@@ -1,0 +1,19 @@
+<header class="navbar navbar-inverse <%= header %>" role="banner">
+    <div class="container">
+      <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to "Rentabuild", root_path, class: "navbar-brand" %>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          <ul class="nav navbar-nav navbar-right">
+            <% if sign_up %>
+              <li><%= link_to "Sign Up", new_rental_path %><li>
+            <% end %>
+          </ul>
+      </nav>
+    </div>
+</header>

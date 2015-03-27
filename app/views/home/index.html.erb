@@ -1,180 +1,173 @@
-<div ng-controller="RentalCtrl" class='rental-ctrl'>
-
-  <div class='landing-panel landing-main'>
-    <div class='row'>
-      
-      <div class='col-md-12'>
-        <h1><%= APP_SETTINGS['application_name'] %></h1>
-        <h2>3d printers delivered to your door.</h2>                
-      </div>
-      
-      <div class='col-md-4 hero-rental'>
-        <div class='row' ng-hide="somethingElse">
-          <div class='col-md-12'>
-            <button type="submit" class="btn btn-primary" ng-click="getStarted()">Get Started</button>
-          </div>
-        </div>
-        
-      </div>
-
+<div id="hero">
+  <div class="container">
+    <h1 class="hero-text animated fadeInDown">
+      Try a 3d printer in the comfort<br/>of your own home
+    </h1>
+    <p class="sub-text animated fadeInDown">
+      We ship you a 3d printer. Print as much as you like.<br/>Send it back when you're done.
+    </p>
+    <div class="cta animated fadeInDown">
+      <%= link_to "Get Started", new_rental_path, class: "button" %>
     </div>
+    <div class="img"></div>
   </div>
+</div>
 
-  <div class='landing-panel landing-description row'>
-    <div class='col-md-4'>
-      <h3 class='text-center'>Print for Less</h3>
-      <div class='large-icon'>
-        <%= fa_icon 'dollar' %>
+<div id="features">
+  <div class="container">
+    <div class="row header">
+      <div class="col-md-12">
+        <h2>No prior experience? No problem.</h2>
+        <p>Rentabuild provides plastic filament, training videos, and personal support- everything you need to get started.</p>
       </div>
-      <p class='text-center'>
-        Start 3D printing for your projects without breaking the bank.
-      </p>
     </div>
-    <div class='col-md-4'>
-      <h3 class='text-center'>Learn about Quality</h3>
-      <div class='large-icon'>
-        <%= fa_icon 'star' %>
+    <div class="row feature">
+      <div class="col-md-6 info">
+        <h4>Bring a 3d printer into your home, workshop, or classroom.</h4>
+        <p>
+          Whether you have a project you need printed, want to introduce students
+          to printing, or are just curious about new technology, renting is a
+          great way to experience 3d printing without breaking the bank.
+        </p>
       </div>
-      <p class='text-center'>
-        Make sure a 3D printer gets the job done before purchasing.
-      </p>
-    </div>
-    <div class='col-md-4'>
-      <h3 class='text-center'>Design is Iterative</h3>
-      <div class='large-icon'>
-        <%= fa_icon 'refresh' %>
+      <div class="col-md-6 image">
+        <img src= "assets/feature_example.png" class="img-responsive" alt="feature1" />
       </div>
-      <p class='text-center'>
-        Refine your designs and print as much as you need.
-      </p>
     </div>
-  </div>
-
-  <div class="clearfix"></div>
-
-  <div class='landing-panel landing-pricing row' id="rental-form">
-    
-    <div class='col-md-12'>
-      <h2>Rent a Printer</h2>  
+    <div class="divider"></div>
+    <div class="row feature backwards">
+      <div class="col-md-6 info">
+        <h4>High-quality printers.</h4>
+        <p>
+          Now renting the durable, dependable Ultimaker 2.
+        </p>
+      </div>
+      <div class="col-md-6 image">
+        <img src= "assets/feature_ultimaker.png" class="img-responsive" alt="feature2" />
+      </div>
     </div>
+    <div class="row feature">
+      <div class="col-md-6 info">
+        <h4>Print as much as you need.</h4>
+        <p>
+          Design is iterative. Refine your designs and print until it's perfect.
+          There are no limitations on how much you can use the printer during
+          your rental.
+        </p>
+      </div>
+      <div class="col-md-6 image">
+        <img src= "assets/feature_filament.png" class="img-responsive" alt="feature1" />
+      </div>
+    </div>
+  </div>    
+</div>
 
-
-    <div class='col-md-6'>
-      <form role="form">
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">Model</label>
-
-          <div ng-hide="somethingElse">
-            {{printer.name}}<br/>
-            <a ng-click="selectDifferent()">Want something different?</a>
+<div id="pricing">
+  <div class="container">
+    <div class="row header">
+      <div class="col-md-12">
+        <h3>All rentals include everything you need to get started.</h3>
+        <p>Shipping anywhere in the continental US.</p>
+      </div>
+    </div>
+    <div class="row charts">
+      <div class="col-md-4">
+        <div class="chart first">
+          <div class="quantity">
+            <span class="dollar">$</span>
+            <span class="price">150</span>
           </div>
-
-          <select class="form-control" 
-            ng-model="printer"
-            ng-options="printer.name for printer in printers"
-            ng-show="somethingElse">
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">For how long?</label>
-
-          <select class="form-control" 
-            ng-model="duration"
-            ng-options="duration for duration in durations">
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="zipcode">Zipcode</label>
-          <input type="text" class="form-control" id="zipcode" placeholder=""
-            ng-model="zipcode">
-        </div>
-        
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="text" class="form-control" id="email" placeholder=""
-            ng-model="email">
-        </div>
-
-        <button type="submit" class="btn btn-primary" ng-click="rent()">Next</button>
-      </form>
-
-    </div>
-
-
-    <div class='col-md-6 row selected-printer'>
-      <h2 class='col-md-12'>Included in your Rental:</h2>
-      <ul class='col-md-12 included-in-rental'>
-        <li>3D Printer - Shipped to your Door</li>
-        <li>1/2 lb PLA Filament</li>        
-        <li>Resources for Getting Started</li>
-        <li>Troubleshooting and Support by Phone or Email</li>
-        <li>Return Shipping Label</li>
-      </ul>
-
-      <div class='col-md-12'>
-        <h3>{{printer.name}}</h3>
-      </div>    
-
-      <div class='col-md-8'>      
-        <a target="_blank" href="{{printer.website}}">Manufacture's Website</a>  
-        <table class='table'>    
-          <tr><td width="50%">Build Dimensions</td>
-            <td>
-              {{printer.build_width}} mm x {{printer.build_depth}} mm x {{printer.build_height}} mm
-            </td>
-          </tr>
-          <tr><td>Speed</td><td>{{printer.speed}}</td></tr>
-          <tr><td>Filament</td><td>{{printer.filament}}</td></tr>
-          <tr><td>Connection</td><td>{{printer.usb ? "USB" : ""}} {{printer.sd ? "SD" : ""}}</td></tr>
-          <tr><td>Purchase Price</td><td>{{printer.price | currency : "$"}}</td></tr>          
-        </table>        
-      </div>
-
-      <div class='col-md-4'>        
-        <img src="{{printer.image}}" width="100%"/>
-      </div>
-    </div>
-
-    <div class='text-center'>
-      Questions or comments? Reach out to us at <%= mail_to "zach@rentabuild.com" %>.
-    </div>
-
-    <div class="modal fade" modal>
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h2 class="modal-title">Thank you!</h2>
-          </div>
-          <div class="modal-body">
-            <p>
-              Thank you for your interest! We're glad you're as excited as we are
-              about getting our hands on 3D printers.
-            </p>
-            <p>
-              Unfortunately, we're still ramping up and are not able to rent this
-              printer right away! We will be in touch when this model is
-              available.
-            </p>
-
-
-            <p>In the meantime, help spread the word!</p>
-            <div>
-              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.rentabuild.com" data-text="RentABuild" data-via="RentABuild">Tweet</a>
-              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+          <div class="plan-name">One Week</div>
+          <div class="specs">
+            <div class="spec">
+              <span class="variable">1/2 lb</span>
+              plastic filament (PLA)
             </div>
-
+            <div class="spec">
+              <span class="variable">Training</span>
+              videos and resources
+            </div>
+            <div class="spec">
+              <span class="variable">Support</span>
+              by email, chat, phone, Skype, and Facetime
+            </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+          <a class="btn-signup button-clear" href="/rentals/new">
+            <span>Get started</span>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="chart featured">
+          <div class="popular">Most popular</div>
+          <div class="quantity">
+            <span class="dollar">$</span>
+            <span class="price">250</span>
           </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
+          <div class="plan-name">Two Weeks</div>
+          <div class="specs">
+            <div class="spec">
+              <span class="variable">1/2 lb</span>
+              plastic filament (PLA)
+            </div>
+            <div class="spec">
+              <span class="variable">Training</span>
+              videos and resources
+            </div>
+            <div class="spec">
+              <span class="variable">Support</span>
+              by email, chat, phone, Skype, and Facetime
+            </div>
+          </div>
+          <a class="btn-signup button-clear" href="/rentals/new">
+            <span>Get started</span>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="chart last">
+          <div class="quantity">
+            <span class="dollar">$</span>
+            <span class="price">400</span>
+          </div>
+          <div class="plan-name">One Month</div>
+          <div class="specs">
+            <div class="spec">
+              <span class="variable">1/2 lb</span>
+              plastic filament (PLA)
+            </div>
+            <div class="spec">
+              <span class="variable">Training</span>
+              videos and resources
+            </div>
+            <div class="spec">
+              <span class="variable">Support</span>
+              by email, chat, phone, Skype, and Facetime
+            </div>
+          </div>
+          <a class="btn-signup button-clear" href="/rentals/new">
+            <span>Get started</span>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
+<div id="slider">
+  <div class="container">
+    <div class="row header">
+      <div class="col-md-12">
+        <h3>Now renting the Ultimaker II</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="cta">
+  <p>
+    Ready to start printing?
+  </p>
+  <%= link_to "Get Started", new_rental_path %>
 </div>
