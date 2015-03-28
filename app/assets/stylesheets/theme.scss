@@ -3,7 +3,7 @@
 @import "modules/elements";
 
 /* vendor */
-@import "../bootstrap/bootstrap.min.css";
+// @import "../bootstrap/bootstrap.min.css";
 @import "bootstrap/bootstrap-overrides";
 
 /* config variables */
@@ -26,7 +26,7 @@
 // @import "partials/pages/pricing";
 // @import "partials/pages/charts";
 // @import "partials/pages/aboutus";
-// @import "partials/pages/contactus";
+@import "partials/pages/contactus";
 // @import "partials/pages/status";
 // @import "partials/pages/gallery";
 @import "partials/pages/portfolio";

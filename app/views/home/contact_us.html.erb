@@ -1,0 +1,59 @@
+<div id="info">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 message">
+        <h3>Send us a message</h3>
+        <p>
+          You can contact us with anything related to Rentabuild. <br/> We'll get in touch with you as soon as possible.
+        </p>
+
+        <%= form_tag(contact_us_path, method: :post) do %>
+          <div class="form-group">
+              <%= label_tag :name, "Your name" %>
+              <%= text_field_tag :name, "", class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <%= text_field_tag :email, "", class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <%= text_field_tag :phone, "", class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <label for="message">Your message</label>
+              <%= text_area_tag :message, "", rows: 6, class: 'form-control' %>
+            </div>
+            <div class="submit">
+              <input type="submit" class="button button-small" value="Email us" />
+            </div>
+        <% end %>
+
+      </div>
+      <div class="col-md-4 contact">
+        <div class="address">
+          <h3>Our Address</h3>
+          <p>
+            368 W Cherrywood Dr, <br />
+            Lafayette, CO 80026
+          </p>
+        </div>
+        <div class="address">
+          <h3>Email</h3>
+          <p>
+            <%= mail_to "zach@rentabuild.com" %>
+          </p>
+        </div>        
+        <div class="phone">
+          <h3>By Phone</h3>
+          <p>
+            1-317-496-8472
+          </p>
+        </div>
+        <div class="social">
+          <a href="https://twitter.com/rentabuild" target="_blank" class="tw"><%= image_tag "social/tw.png" %></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
