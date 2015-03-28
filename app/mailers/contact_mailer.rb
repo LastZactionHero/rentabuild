@@ -6,7 +6,7 @@ class ContactMailer < ActionMailer::Base
     @phone = phone
     @message = message
 
-    mail(subject: "Contact Us Email Received", to: "zach@rentabuild.com")
+    mail(subject: "Contact Us Email Received", from: "zach@rentabuild.com", to: "zach@rentabuild.com")
   end
 
 end

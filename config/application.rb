@@ -35,6 +35,16 @@ module Rentabuild
     #   :domain => 'rentabuild.com', # your domain to identify your server when connecting
     # }
 
+    config.action_mailer.smtp_settings = {
+        address:              'smtp.gmail.com',
+        port:                 587,
+        user_name:            APP_SETTINGS["gmail_username"],
+        password:             APP_SETTINGS["gmail_password"],
+        authentication:       'plain',
+        enable_starttls_auto: true  
+    }  
+    config.action_mailer.raise_delivery_errors = true
+
     config.generators do |g|
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
