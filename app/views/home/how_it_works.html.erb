@@ -1,0 +1,148 @@
+<div id="home"><div id="features">
+
+<div id="tabs">
+  <div class="container">
+    <div class="row header">
+      <h3>Get started with 3d printing for less</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-12 tabs-wrapper">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#makers" data-toggle="tab">Makers and Hobbyists</a></li>
+            <li><a href="#profile" data-toggle="tab">Professionals</a></li>
+            <li><a href="#messages" data-toggle="tab">Schools and STEM Programs</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="makers">
+              <div class="col-md-6 info">
+                <h4>Bring a printer into your home</h4>
+                <p>
+                  3d printing is the highlight of every maker-focused website, 
+                  but it still out of reach for many.
+                </p>
+                <p>
+                  Rentabuild lets you experiment with 3d printing in the comfort
+                  of your own home. Print out the models you've been working, or
+                  explore large repositories like <%= link_to "Thingiverse", "http://thingiverse.com", target: :blank %>.
+                </p>
+                <p><%= link_to "Get Started", new_rental_path, class: "button button-small" %></p>
+              </div>
+              <div class="col-md-6 image">
+                <%= image_tag "feature_maker.png", class: "img-responsive", style: "position: relative;top: 15px;" %>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="profile">
+              <div class="col-md-6 image">
+                <%= image_tag "feature_professional.png", class: "img-responsive", style: "position: relative;top: 15px;" %>
+              </div>
+              <div class="col-md-6 info">
+                <h4>Extra Power and Downtime Protection</h4>
+                <p>
+                  Printer on the fritz? 
+                  In a rush and need some extra support to finish a job? 
+                  Curious about a specific model before buying?
+                </p>
+                <p>
+                  Rentabuild provides the extra hardware you need to finish the job,
+                  or lets you evaluate a specific printer before making an 
+                  investment.
+                </p>
+                <p><%= link_to "Get Started", new_rental_path, class: "button button-small" %></p>
+              </div>                
+            </div>
+            <div class="tab-pane fade" id="messages">
+              <div class="col-md-6 info">
+                <h4>Bring a printer into your classroom</h4>
+                <p>
+                  Educators are eager to introduce 3d printers to students, but
+                  they're often outside the budget of most school science programs.
+                </p>
+                <p>
+                  Rentabuild works with schools and STEM programs to bring 
+                  printers into the classroom at a low price, and without any
+                  continuing costs of maintenance and upkeep.
+                </p>
+                <p><%= link_to "Get Started", new_rental_path, class: "button button-small" %></p>
+              </div>
+              <div class="col-md-6 image">
+                <%= image_tag "feature_classroom.png", class: "img-responsive", style: "position: relative;top: 15px;" %>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="first-option">
+  <div class="container">
+    <div class="row header">
+      <div class="col-md-12">
+        <h2>How does a rental work?</h2>
+        <p>Rentabuild provides everything you need to get started.</p>
+      </div>
+    </div>
+    <div class="row feature">
+      <div class="col-md-6 info">
+        <h4>1. We ship a printer to your door.</h4>
+        <p>
+          We ship a printer to arrive on the date you request.
+        </p>
+        <p>
+          We are currently renting the reliable and popular
+          <%= link_to "Ultimaker 2", "https://ultimaker.com/en/products/ultimaker-2-family", target: :blank %>.
+        </p>
+        <br/>
+        <ul>
+          <li><p>Heated build plate to prevent warping</p></li>
+          <li><p>20 micron layer resolution</p></li>
+          <li><p>30 mm/s - 300 mm/s speed</p></li>
+          <li><p>USB and SD card</p></li>
+        </ul>
+      </div>
+      <div class="col-md-6 image">
+        <iframe src="https://player.vimeo.com/video/121142838" width="100%" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/121142838">Ultimaker II Unboxing</a> from <a href="https://vimeo.com/user37804306">Rentabuild</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+      </div>
+    </div>
+    <div class="row feature">
+      <div class="col-md-6 info">
+        <h4>2. Print as much as you'd like.</h4>
+        <p>
+          Rentabuild provides everything you need to get started:
+        </p>
+        <ul>
+          <li><p>1/2 lbs PLA plastic flament<br/>(if you're unfamiliar with printing, it's quite a bit)</p></li>
+          <li><p>Software (Cura) to transfer models to the printer</p></li>
+          <li><p>Video tutorials</p></li>
+          <li><p>Reference materials</p></li>
+          <li><p>Live support by phone, email, or video chat</p></li>
+          <li><p>Demo models</p></li>
+        </ul>
+        <br/>
+        <p>
+          Print whatever you want during your rental period. There are no restrictions
+          on how much you can print.
+        <p>
+      </div>
+      <div class="col-md-6 image">
+        <iframe src="https://player.vimeo.com/video/121325279" width="100%" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/121325279">Ultimaker II First Time Setup</a> from <a href="https://vimeo.com/user37804306">Rentabuild</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+      </div>
+    </div>
+    <div class="row feature last">
+      <div class="col-md-6 info">
+        <h4>3. Ship it back.</h4>
+        <p>
+          When your rental is finished, slap on the pre-addressed shipping label
+          and drop off at a Fedex shipping center.
+        </p>
+      </div>
+      <div class="col-md-6 image">
+        <iframe src="https://player.vimeo.com/video/120974516" width="100%" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="https://vimeo.com/120974516">Re-boxing the Ultimaker II</a> from <a href="https://vimeo.com/user37804306">Rentabuild</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div></div>

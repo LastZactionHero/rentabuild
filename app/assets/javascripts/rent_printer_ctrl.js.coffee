@@ -32,6 +32,9 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
       $scope.currentStepId += 1 
       mixpanel.track($scope.currentStep());
 
+  $scope.learnMore = ->
+    $scope.postSignup()
+    window.location = "/how_it_works"
 
   $scope.prevStep = ->
     $scope.currentStepId -= 1  

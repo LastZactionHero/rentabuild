@@ -23,6 +23,10 @@ class HomeController < ApplicationController
     redirect_to contact_us_path
   end
 
+  def how_it_works
+    render layout: "application"
+  end
+
   private
 
   def redirect_if_logged_in
