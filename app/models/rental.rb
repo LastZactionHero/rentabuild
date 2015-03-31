@@ -14,6 +14,8 @@ class Rental < ActiveRecord::Base
   validates_presence_of :stripe_card_token
   validates_presence_of :amount
 
+  belongs_to :promo_code
+  
   PREP_TIME_DAYS = 4
 
   def self.rental_windows(start_date, end_date, minimum_days = 7)

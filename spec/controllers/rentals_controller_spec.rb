@@ -118,6 +118,109 @@ describe RentalsController do
       expect(body["total_cost"]).to eq(200.00)
     end
 
+    describe 'promo codes' do
+
+      it 'adds free shipping' do
+        promo_code = FactoryGirl.create(:promo_code, free_shipping: true)
+        duration = 7
+        shipping = 'national'
+
+        get 'quote', 
+          duration: duration, 
+          shipping: shipping, 
+          promo_code: promo_code.code
+
+        expect(response).to be_success
+        body = JSON.parse(response.body)
+        expect(body["rental_cost"]).to eq(150.0)
+        expect(body["shipping_cost"]).to eq(0.00)
+        expect(body["total_cost"]).to eq(150.00)
+        expect(body["promo_code"]["code"]).to eq(promo_code.code)
+        expect(body["promo_code"]["description"]).to eq(promo_code.description)
+        expect(body["promo_code"]["valid"]).to eq(true)
+      end
+
+      it 'takes a fixed amount off a rental' do
+        promo_code = FactoryGirl.create(:promo_code, amount_off: 50.0)
+        duration = 7
+        shipping = 'national'
+
+        get 'quote', 
+          duration: duration, 
+          shipping: shipping, 
+          promo_code: promo_code.code
+
+        expect(response).to be_success
+        body = JSON.parse(response.body)
+        expect(body["rental_cost"]).to eq(100.0)
+        expect(body["shipping_cost"]).to eq(50.00)
+        expect(body["total_cost"]).to eq(150.00)
+        expect(body["promo_code"]["code"]).to eq(promo_code.code)
+        expect(body["promo_code"]["description"]).to eq(promo_code.description)
+        expect(body["promo_code"]["valid"]).to eq(true)
+      end
+
+      it 'takes a fixed amount off a rental for a specific duration' do
+        promo_code = FactoryGirl.create(:promo_code, amount_off: 50.0, duration: 7)
+        duration = 7
+        shipping = 'national'
+
+        get 'quote', 
+          duration: duration, 
+          shipping: shipping, 
+          promo_code: promo_code.code
+
+        expect(response).to be_success
+        body = JSON.parse(response.body)
+        expect(body["rental_cost"]).to eq(100.0)
+        expect(body["shipping_cost"]).to eq(50.00)
+        expect(body["total_cost"]).to eq(150.00)
+        expect(body["promo_code"]["code"]).to eq(promo_code.code)
+        expect(body["promo_code"]["description"]).to eq(promo_code.description)
+        expect(body["promo_code"]["valid"]).to eq(true)
+      end
+
+      it 'indicates an invalid promo code' do
+        duration = 7
+        shipping = 'national'
+
+        get 'quote', 
+          duration: duration, 
+          shipping: shipping, 
+          promo_code: "INVALID CODE"
+
+        expect(response).to be_success
+        body = JSON.parse(response.body)
+        expect(body["rental_cost"]).to eq(150.0)
+        expect(body["shipping_cost"]).to eq(50.00)
+        expect(body["total_cost"]).to eq(200.00)
+        expect(body["promo_code"]["code"]).to eq("INVALID CODE")
+        expect(body["promo_code"]["valid"]).to eq(FALSE)
+        expect(body["promo_code"]["error"]).to eq("This code is not valid.")
+      end
+
+      it 'indicates an invalid promo code for a duration' do
+        promo_code = FactoryGirl.create(:promo_code, amount_off: 50.0, duration: 14)
+        duration = 7
+        shipping = 'national'
+
+        get 'quote', 
+          duration: duration, 
+          shipping: shipping, 
+          promo_code: promo_code.code
+
+        expect(response).to be_success
+        body = JSON.parse(response.body)
+        expect(body["rental_cost"]).to eq(150.0)
+        expect(body["shipping_cost"]).to eq(50.00)
+        expect(body["total_cost"]).to eq(200.00)
+        expect(body["promo_code"]["code"]).to eq(promo_code.code)
+        expect(body["promo_code"]["description"]).to eq(promo_code.description)
+        expect(body["promo_code"]["valid"]).to eq(false)
+        expect(body["promo_code"]["error"]).to eq("This code is not valid for this rental length.")
+      end
+
+    end
   end
 
   describe 'rent' do
@@ -190,6 +293,29 @@ describe RentalsController do
           stripe_card_token: stripe_card_token
 
         expect(response.status).to eq(200)
+      end
+    end
+
+    it 'successfully creates a rental with a promo code' do
+      promo_code = FactoryGirl.create(:promo_code, amount_off: 50, free_shipping: true)
+
+      VCR.use_cassette("successful_rental") do
+        post 'rent', start_date: start_date, 
+          duration: duration, 
+          shipping: shipping,
+          name: name,
+          phone: phone,
+          email: email,
+          address_line_1: address_line_1,
+          zipcode: zipcode,
+          stripe_card_token: stripe_card_token,
+          promo_code: promo_code.code
+
+        expect(response.status).to eq(200)
+
+        rental = Rental.last
+        expect(rental.promo_code).to eq(promo_code)
+        expect(rental.amount).to eq(100)
       end
     end
     

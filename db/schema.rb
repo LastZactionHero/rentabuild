@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216150556) do
+ActiveRecord::Schema.define(version: 20150331021434) do
 
   create_table "landing_page_signups", force: true do |t|
     t.string   "email"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(version: 20141216150556) do
     t.string   "stripe_plan_id"
   end
 
+  create_table "promo_codes", force: true do |t|
+    t.string   "code"
+    t.string   "description"
+    t.float    "amount_off"
+    t.boolean  "free_shipping"
+    t.integer  "duration"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "rentals", force: true do |t|
     t.datetime "start_date"
     t.datetime "end_date"
@@ -48,6 +58,7 @@ ActiveRecord::Schema.define(version: 20141216150556) do
     t.string   "stripe_card_token"
     t.string   "stripe_charge_id"
     t.decimal  "amount"
+    t.integer  "promo_code_id"
   end
 
   create_table "user_plans", force: true do |t|

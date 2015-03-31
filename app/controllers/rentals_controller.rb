@@ -1,4 +1,4 @@
-class RentalsController < ApplicationController
+class RentalsController < ApplicationController  
   before_filter :find_dates_or_fail, only: [:validate_dates, :rent]
   before_filter :find_cost_or_fail, only: [:quote, :rent]
 
@@ -20,13 +20,17 @@ class RentalsController < ApplicationController
 
   end
 
-  def quote    
-    render status: 200, json: {
+  def quote
+    body = {
       model: "Ultimaker II",
       shipping_cost: @shipping_cost,
       rental_cost: @rental_cost,
       total_cost: @total_cost
     }
+
+    body = apply_promo_code_response(body) if @promo_code
+
+    render status: 200, json: body
   end
 
   def rent
@@ -45,7 +49,8 @@ class RentalsController < ApplicationController
       address_line_2: params.delete(:address_line_2),
       zipcode: params.delete(:zipcode),
       amount: @total_cost,
-      stripe_card_token: card_token
+      stripe_card_token: card_token,
+      promo_code: @promo_code
     )
 
     # Validate Rental
@@ -137,8 +142,45 @@ class RentalsController < ApplicationController
       render status: 400, json: {errors: errors} and return
     end
 
+    @promo_code, @promo_code_error = find_and_validate_promo_code(@duration)
+    if @promo_code && @promo_code_error.blank?
+      @shipping_cost = 0 if @promo_code.free_shipping
+      @rental_cost -= @promo_code.amount_off if @promo_code.amount_off
+    end
+
     @total_cost = @rental_cost + @shipping_cost
   end
 
+  def find_and_validate_promo_code(duration)
+    promo_code = nil
+    error = nil
+
+    code = params.delete(:promo_code)
+    return [nil, nil] unless code
+
+    promo_code = PromoCode.find_by_code(code)
+    if promo_code && promo_code.duration && promo_code.duration != duration
+      error = "This code is not valid for this rental length."
+    elsif promo_code.nil?
+      error = "This code is not valid."
+      promo_code = OpenStruct.new(
+        code: code,
+        free_shipping: false,
+        amount_off: 0
+      )
+    end
+
+    [promo_code, error]
+  end
+
+  def apply_promo_code_response(body)
+    body[:promo_code] = {
+      code: @promo_code.code,
+      description: @promo_code.description,
+      valid: @promo_code_error.blank?,
+      error: @promo_code_error
+    }
+    body
+  end
 
 end
