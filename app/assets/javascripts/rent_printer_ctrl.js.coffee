@@ -106,7 +106,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
       $scope.datesOk = data.available
       
       if $scope.datesOk
-        $scope.getQuote($scope.rentalDays, $scope.shipping)
+        $scope.getQuote($scope.rentalDays, $scope.shipping, $scope.promoCode)
       else
         $scope.dateError = "Ack! This printer is not available for those dates. Try these instead:"
         $scope.suggestedDates = data.windows
@@ -173,13 +173,17 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     )
 
 
-  $scope.getQuote = (duration, shipping) ->
+  $scope.getQuote = (duration, shipping, promoCode) ->
     return unless duration && shipping
     
     url = "/rentals/quote?duration=" + duration + "&shipping=" + shipping
+    url += "&promo_code=" + promoCode if promoCode
+
     $scope.quote = null
     $http.get(url).success( (data) ->
       $scope.quote = data
+
+      console.log($scope.quote)
     )
 
   $scope.validateFields = ->
@@ -217,4 +221,11 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
         zipcode: $scope.zipcode,
       }
     )
+
+  $scope.promoCode = null
+
+  $scope.applyPromoCode = ->
+    console.log("applyPromoCode")
+    $scope.getQuote($scope.rentalDays, $scope.shipping, $scope.promoCode)
+
 ]

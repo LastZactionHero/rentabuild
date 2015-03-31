@@ -231,6 +231,27 @@
 
           <hr/>
 
+          <div ng-show="quote.promo_code.valid" class='alert alert-success'>
+            Promo Code {{quote.promo_code.code}}: {{quote.promo_code.description}}
+          </div>
+
+          <div ng-show="quote.promo_code.error" class='alert alert-danger'>
+            {{quote.promo_code.error}}
+          </div>
+
+          <div class="form-group">
+            <label for="promoCode", class="col-sm-2 control-label">Promo Code</label>
+            <div class="col-sm-5">
+              <input type="text" 
+                class="form-control" 
+                id="promoCode" 
+                ng-model="promoCode">
+            </div>
+            <div class='col-sm-4'>
+              <a href="" ng-click="applyPromoCode()">Apply</a>
+            </div>
+          </div>
+
           <h3>Credit Card</h3>
 
 
