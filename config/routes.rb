@@ -15,7 +15,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :landing_page_signups, only: [:create]
+  resources :landing_page_signups, only: [:create] do
+    collection do
+      get :recent
+    end
+  end
+  
   resources :rentals, only: [:new] do
     collection do
       get 'validate_dates'
