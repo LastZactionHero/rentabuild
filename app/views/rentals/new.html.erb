@@ -27,7 +27,7 @@
       <div ng-show="currentStep() == 'time_duration'">
         <h3>Rental Dates</h3>
         <p>
-          We are currently renting the <strong>Ultimaker II</strong> printer. 
+          We are currently renting the <strong>Ultimaker II</strong> printer.
           <%= link_to "(More Info)", "https://ultimaker.com/en/products/ultimaker-2-family", target: :blank %>
         </p>
         <hr/>
@@ -49,19 +49,19 @@
             <label for="inputEmail3" class="col-sm-2 control-label">Start Date</label>
             <div class="col-sm-5">
               <p class="input-group">
-                <input type="text" 
-                  class="form-control date-picker-input" 
-                  datepicker-popup="M/dd/yyyy" 
-                  ng-model="startDate" 
-                  is-open="showStartDate" 
+                <input type="text"
+                  class="form-control date-picker-input"
+                  datepicker-popup="M/dd/yyyy"
+                  ng-model="startDate"
+                  is-open="showStartDate"
                   datepicker-options="dateOption"
-                  ng-required="true" 
+                  ng-required="true"
                   ng-change="datesChanged()"
                   close-text="Close" />
 
                 <span class="input-group-btn">
-                  <button type="button" 
-                    class="btn btn-default" 
+                  <button type="button"
+                    class="btn btn-default"
                     ng-click="openStartDate($event)">
                     <i class="glyphicon glyphicon-calendar"></i>
                   </button>
@@ -76,7 +76,7 @@
           {{dateError}}
           <ul ng-show="suggestedDates">
             <li ng-repeat="date in suggestedDates">
-              {{date.start_date | date: "M/dd/yyyy"}} to {{date.end_date | date: "M/dd/yyyy"}}
+              Starting {{date.start_date | date: "M/dd/yyyy"}}, ending {{date.end_date | date: "M/dd/yyyy"}}
             </li>
           </ul>
         </div>
@@ -126,7 +126,7 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="inputPhone" placeholder="333-444-5678" ng-model="phone">
             </div>
-          </div>    
+          </div>
 
           <div class="form-group">
             <label for="inputAddr1" class="col-sm-2 control-label">Address 1</label>
@@ -139,19 +139,19 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="inputAddr2" placeholder="" ng-model="addressLine2">
             </div>
-          </div>  
+          </div>
           <div class="form-group">
             <label for="inputUnit" class="col-sm-2 control-label">Unit/Apartment</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="inputUnit" placeholder="" ng-model="addressUnit">
             </div>
-          </div> 
+          </div>
           <div class="form-group">
             <label for="inputZip" class="col-sm-2 control-label">Zipcode</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="inputZip" placeholder="" ng-model="zipcode">
             </div>
-          </div>  
+          </div>
 
         </div>
 
@@ -181,7 +181,7 @@
               <div class='col-sm-4'>Rental Dates</div>
               <div class='col-sm-8'>{{startDate | date: "M/dd/yyyy" }} for {{rentalDays}} days</div>
             </div>
-            
+
             <hr/>
             <div class='row header'>
               <h4 class='col-md-12'>Personal Info and Shipping Address</h4>
@@ -205,7 +205,7 @@
             <div class='row'>
               <div class='col-sm-4'>Address Line 2</div>
               <div class='col-sm-8'>{{addressLine2}}</div>
-            </div>                        
+            </div>
             <div class='row'>
               <div class='col-sm-4'>Zipcode</div>
               <div class='col-sm-8'>{{zipcode}}</div>
@@ -226,7 +226,7 @@
             <div class='row'>
               <div class='col-sm-4'>Total</div>
               <div class='col-sm-8'>${{quote.total_cost}}</div>
-            </div>  
+            </div>
           </div>
 
           <hr/>
@@ -242,9 +242,9 @@
           <div class="form-group">
             <label for="promoCode", class="col-sm-2 control-label">Promo Code</label>
             <div class="col-sm-5">
-              <input type="text" 
-                class="form-control" 
-                id="promoCode" 
+              <input type="text"
+                class="form-control"
+                id="promoCode"
                 ng-model="promoCode">
             </div>
             <div class='col-sm-4'>
@@ -258,51 +258,51 @@
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Card Number</label>
             <div class="col-sm-5">
-              <input type="text" 
-                class="form-control" 
-                id="inputEmail3" 
-                placeholder="Card Number" 
-                size="20" 
+              <input type="text"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="Card Number"
+                size="20"
                 data-stripe="number"
                 ng-model="cardNumber">
             </div>
-          </div> 
+          </div>
 
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">CVC</label>
             <div class="col-sm-2">
-              <input type="text" 
-                class="form-control" 
-                id="inputEmail3" 
-                placeholder="CVC" 
-                size="4" 
+              <input type="text"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="CVC"
+                size="4"
                 data-stripe="cvc"
                 ng-model="cardCVC">
             </div>
-          </div> 
+          </div>
 
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Expiration</label>
             <div class="col-sm-2">
-              <input type="text" 
-                class="form-control" 
-                id="inputEmail3" 
-                placeholder="MM" 
-                size="2" 
+              <input type="text"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="MM"
+                size="2"
                 data-stripe="exp-month"
                 ng-model="cardMonth">
             </div>
             <div class="col-sm-2">
-              <input 
-                type="text" 
-                class="form-control" 
-                id="inputEmail3" 
-                placeholder="YYYY" 
-                size="4" 
+              <input
+                type="text"
+                class="form-control"
+                id="inputEmail3"
+                placeholder="YYYY"
+                size="4"
                 data-stripe="exp-year"
                 ng-model="cardYear">
             </div>
-          </div> 
+          </div>
 
           <hr/>
 
@@ -323,7 +323,7 @@
           <div class='alert alert-warning' ng-show="missingFields">
             Looks like we're missing some info: {{missingFields}}
           </div>
-          
+
           <div class="alert alert-warning" ng-show="paymentError">
             {{paymentError}}
           </div>
@@ -333,7 +333,7 @@
       </div>
 
       <!-- BUTTON BAR -->
-      <div>    
+      <div>
         <div class='row' ng-show="firstStep()">
           <div class='col-sm-10 col-sm-offset-2'>
             <a href="" class='button button-small' ng-click="nextStep()">Rent a printer!</a>
@@ -358,7 +358,7 @@
           </div>
           <div class='col-sm-4'>
             <a href="" class='button-outline' ng-click="prevStep()">Back</a>
-          </div>      
+          </div>
         </div>
 
       </div>

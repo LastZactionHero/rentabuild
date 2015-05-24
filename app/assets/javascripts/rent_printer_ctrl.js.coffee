@@ -25,11 +25,11 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
       valid = $scope.validateGettingStarted()
     else if step == "time_duration"
       valid = $scope.validateTimeDuration()
-    else if step == "shipping" 
+    else if step == "shipping"
       valid = $scope.validateShipping()
 
     if valid
-      $scope.currentStepId += 1 
+      $scope.currentStepId += 1
       mixpanel.track($scope.currentStep());
 
   $scope.learnMore = ->
@@ -37,7 +37,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     window.location = "/how_it_works"
 
   $scope.prevStep = ->
-    $scope.currentStepId -= 1  
+    $scope.currentStepId -= 1
 
   $scope.firstStep = ->
     $scope.currentStepId == 0
@@ -49,7 +49,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     true
 
   $scope.validateTimeDuration = ->
-    $scope.dateError = "You must select rental dates." unless $scope.datesOk    
+    $scope.dateError = "You must select rental dates." unless $scope.datesOk
     $scope.datesOk
 
   $scope.validateShipping = ->
@@ -99,29 +99,29 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     if($scope.startDate < now)
       $scope.dateError = "Date must be in the future"
     else
-      $scope.checkDates($scope.startDate, $scope.rentalDays)    
+      $scope.checkDates($scope.startDate, $scope.rentalDays)
 
   $scope.checkDates = (startDate, rentalDays) ->
     $http.get("/rentals/validate_dates?start_date=" + startDate + "&duration=" + rentalDays).success( (data) ->
       $scope.datesOk = data.available
-      
+
       if $scope.datesOk
         $scope.getQuote($scope.rentalDays, $scope.shipping, $scope.promoCode)
       else
-        $scope.dateError = "Ack! This printer is not available for those dates. Try these instead:"
+        $scope.dateError = "Ack! This printer is not available for those dates. Here are some other dates that are available:"
         $scope.suggestedDates = data.windows
 
-    )    
+    )
 
-  $scope.rent = -> 
+  $scope.rent = ->
     $scope.paymentError = null
     unless $scope.termsOfService
       $scope.paymentError = "You must agree to the terms of service."
       return
-    
+
     if($scope.validateFields() && $scope.quote)
       $scope.submitting = true
-      $scope.stripeCreateToken()      
+      $scope.stripeCreateToken()
 
   $scope.stripeCreateToken = ->
     $scope.submitting = true
@@ -137,7 +137,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
       exp_year: $scope.cardYear
     }, $scope.stripeResponseHandler);
 
-  $scope.stripeResponseHandler = (status, response) ->  
+  $scope.stripeResponseHandler = (status, response) ->
     if response.error
       $timeout( ->
         $scope.submitting = false
@@ -175,7 +175,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
 
   $scope.getQuote = (duration, shipping, promoCode) ->
     return unless duration && shipping
-    
+
     url = "/rentals/quote?duration=" + duration + "&shipping=" + shipping
     url += "&promo_code=" + promoCode if promoCode
 
@@ -204,7 +204,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
 
     errors.length == 0
 
-  $scope.openStartDate = (event) -> 
+  $scope.openStartDate = (event) ->
     event.preventDefault()
     event.stopPropagation()
     $scope.showStartDate = true;

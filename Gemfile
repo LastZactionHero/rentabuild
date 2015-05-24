@@ -58,7 +58,7 @@ gem 'geocoder', '~> 1.2.6'
 
 gem 'capistrano', '~> 2.15.5', group: :development
 gem 'letter_opener', '~> 1.2.0', group: :development
-gem 'rvm-capistrano', '~> 1.5.1', group: :development
+#gem 'rvm-capistrano', '~> 1.5.1', group: :development
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1.0'
@@ -68,5 +68,5 @@ end
 group :test do
   gem 'vcr', '~> 2.9.3'
   gem 'webmock', '~> 1.20.4'
+  gem 'timecop', '~> 0.7.3'
 end
-

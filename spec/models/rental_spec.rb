@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Rental, :type => :model do
-  
+
   describe 'validations' do
 
     it 'must include a start date and end date' do
@@ -21,7 +21,7 @@ RSpec.describe Rental, :type => :model do
     it 'cannot overlap with the start of another rental' do
       first_rental_start_date = DateTime.parse("March 3, 2015")
       first_rental_end_date = DateTime.parse("March 20, 2015")
-      first_rental = FactoryGirl.create(:rental, 
+      first_rental = FactoryGirl.create(:rental,
         start_date: first_rental_start_date,
         end_date: first_rental_end_date)
 
@@ -38,7 +38,7 @@ RSpec.describe Rental, :type => :model do
     it 'cannot overlap with the end of another rental' do
       first_rental_start_date = DateTime.parse("March 3, 2015")
       first_rental_end_date = DateTime.parse("March 20, 2015")
-      first_rental = FactoryGirl.create(:rental, 
+      first_rental = FactoryGirl.create(:rental,
         start_date: first_rental_start_date,
         end_date: first_rental_end_date)
 
@@ -55,7 +55,7 @@ RSpec.describe Rental, :type => :model do
     it 'cannot be within another rental' do
       first_rental_start_date = DateTime.parse("March 3, 2015")
       first_rental_end_date = DateTime.parse("March 20, 2015")
-      first_rental = FactoryGirl.create(:rental, 
+      first_rental = FactoryGirl.create(:rental,
         start_date: first_rental_start_date,
         end_date: first_rental_end_date)
 
@@ -72,7 +72,7 @@ RSpec.describe Rental, :type => :model do
     it 'cannot contains another rental' do
       first_rental_start_date = DateTime.parse("March 3, 2015")
       first_rental_end_date = DateTime.parse("March 20, 2015")
-      first_rental = FactoryGirl.create(:rental, 
+      first_rental = FactoryGirl.create(:rental,
         start_date: first_rental_start_date,
         end_date: first_rental_end_date)
 
@@ -90,7 +90,7 @@ RSpec.describe Rental, :type => :model do
       start_date = "March 3, 2015"
       end_date = "March 15, 2015"
       rental = Rental.create(
-        start_date: start_date, 
+        start_date: start_date,
         end_date: end_date,
         duration: 6,
         shipping: 'local',
@@ -113,9 +113,9 @@ RSpec.describe Rental, :type => :model do
       expect(rental).to be_valid
 
       start_date = "March 31, 2015"
-      end_date = "April 10, 2015"      
+      end_date = "April 10, 2015"
       rental = Rental.create(
-        start_date: start_date, 
+        start_date: start_date,
         end_date: end_date,
         duration: 6,
         shipping: 'local',
@@ -126,8 +126,8 @@ RSpec.describe Rental, :type => :model do
         zipcode: '80026',
         stripe_card_token: 'tok_123',
         stripe_charge_id: 'ch_123',
-        amount: 200.00)        
-      expect(rental).to be_valid      
+        amount: 200.00)
+      expect(rental).to be_valid
     end
 
   end
@@ -151,18 +151,18 @@ RSpec.describe Rental, :type => :model do
   end
 
   describe 'rental_window' do
-    let(:rental_1){FactoryGirl.create(:rental, 
+    let(:rental_1){FactoryGirl.create(:rental,
       start_date: DateTime.parse("February 1, 2015"),
       end_date: DateTime.parse("February 15, 2015"))
     }
     let(:rental_2){
-      FactoryGirl.create(:rental, 
+      FactoryGirl.create(:rental,
         start_date: DateTime.parse("February 23, 2015"),
         end_date: DateTime.parse("March 10, 2015")
       )
     }
     let(:rental_3){
-      FactoryGirl.create(:rental, 
+      FactoryGirl.create(:rental,
         start_date: DateTime.parse("April 9, 2015"),
         end_date: DateTime.parse("April 15, 2015")
       )
@@ -170,7 +170,7 @@ RSpec.describe Rental, :type => :model do
 
     let(:start_date){DateTime.parse("January 1, 2015")}
     let(:end_date){DateTime.parse("June 1, 2015")}
-    
+
     before(:each) do
       rental_1
       rental_2
@@ -178,19 +178,30 @@ RSpec.describe Rental, :type => :model do
     end
 
     it 'provides a list of days for rental within a range' do
-      windows = Rental.rental_windows(start_date, end_date)
+      new_time = Time.local(2015, 1, 1, 0, 0, 0)
+      Timecop.freeze(new_time)
+
+      windows = Rental.rental_windows()
+
       expect(windows).to eq([
-        {start_date: start_date, end_date: rental_1.start_date - 8.days},
-        {start_date: rental_2.end_date + 8.days, end_date: rental_3.start_date - 8.days},
-        {start_date: rental_3.end_date + 8.days, end_date: end_date}
+        {start_date: DateTime.parse("Thu, 01 Jan 2015 00:00:00 UTC +00:00"),
+         end_date: DateTime.parse("Sat, 24 Jan 2015 00:00:00 UTC +00:00")},
+        {start_date: DateTime.parse("Wed, 18 Mar 2015 00:00:00 UTC +00:00"),
+         end_date: DateTime.parse("Wed, 01 Apr 2015 00:00:00 UTC +00:00")},
+        {start_date: DateTime.parse("Thu, 23 Apr 2015 00:00:00 UTC +00:00"),
+         end_date: DateTime.parse("Thu, 31 Dec 2015 00:00:00 UTC +00:00")}
       ])
     end
 
     it 'provides a list of days for rental within a range with a minimum day length' do
-      windows = Rental.rental_windows(start_date, end_date, 15)
+      new_time = Time.local(2015, 1, 1, 0, 0, 0)
+      Timecop.freeze(new_time)
+
+      windows = Rental.rental_windows(15)
       expect(windows).to eq([
-        {start_date: start_date, end_date: rental_1.start_date - 8.days},
-        {start_date: rental_3.end_date + 8.days, end_date: end_date}
+        {:start_date=>DateTime.parse("Thu, 01 Jan 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Sat, 24 Jan 2015 00:00:00 +0000")},
+        {:start_date=>DateTime.parse("Wed, 18 Mar 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Wed, 01 Apr 2015 00:00:00 +0000")},
+        {:start_date=>DateTime.parse("Thu, 23 Apr 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Thu, 31 Dec 2015 00:00:00 +0000")}
       ])
     end
 

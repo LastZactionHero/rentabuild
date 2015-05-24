@@ -1,4 +1,4 @@
-class RentalsController < ApplicationController  
+class RentalsController < ApplicationController
   before_filter :find_dates_or_fail, only: [:validate_dates, :rent]
   before_filter :find_cost_or_fail, only: [:quote, :rent]
 
@@ -14,7 +14,7 @@ class RentalsController < ApplicationController
     if available
       render status: 200, json: {available: true}
     else
-      windows = Rental.rental_windows(DateTime.now, 6.months.from_now)
+      windows = Rental.rental_windows(@duration)
       render status: 200, json: {available: false, windows: windows}
     end
 
@@ -74,7 +74,7 @@ class RentalsController < ApplicationController
 
       rental.stripe_charge_id = charge.id
       rental.save
-  
+
     rescue Stripe::CardError => e
       render status: 400, json: {errors: e.message} and return
     end
@@ -97,11 +97,11 @@ class RentalsController < ApplicationController
   def success
 
   end
-  
+
   def agreement
 
   end
-  
+
   private
 
   def find_dates_or_fail
@@ -113,7 +113,7 @@ class RentalsController < ApplicationController
       render status: 400, json: {error: "Start date and duration must be present"}
       return
     end
-    
+
     @start_date ||= DateTime.parse(start_date_str).to_time
     @end_date ||= @start_date + @duration.days
   end
