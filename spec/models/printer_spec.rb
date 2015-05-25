@@ -21,4 +21,17 @@ describe Printer do
 
   end
 
+  describe 'find_by_id' do
+
+    it 'finds a printer by id' do
+      printer = Printer.find_by_id(1)
+      expect(printer.id).to eq(1)
+    end
+
+    it 'returns nil if not found' do
+      expect(Printer.find_by_id(100)).to be_nil
+    end
+
+  end
+
 end

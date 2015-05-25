@@ -13,6 +13,7 @@ class Rental < ActiveRecord::Base
   validates_presence_of :zipcode
   validates_presence_of :stripe_card_token
   validates_presence_of :amount
+  validates_presence_of :printer_id
 
   belongs_to :promo_code
 
@@ -89,6 +90,10 @@ class Rental < ActiveRecord::Base
     )
     other_rentals = other_rentals.where("id != ?", id) if id
     other_rentals.empty?
+  end
+
+  def printer
+    Printer.find_by_id(printer_id)
   end
 
   private

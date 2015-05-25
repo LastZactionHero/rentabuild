@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150331021434) do
+ActiveRecord::Schema.define(version: 20150525013233) do
 
   create_table "landing_page_signups", force: true do |t|
     t.string   "email"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20150331021434) do
     t.string   "stripe_charge_id"
     t.decimal  "amount"
     t.integer  "promo_code_id"
+    t.integer  "printer_id",        default: 0
   end
 
   create_table "user_plans", force: true do |t|

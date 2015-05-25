@@ -8,6 +8,10 @@ class Printer
     ].map{|p| Printer.new(p[:id], p[:name], p[:priority])}
   end
 
+  def self.find_by_id(id)
+    Printer.all.select{|p| p.id == id}.first
+  end
+
   def initialize(id, name, priority)
     @id = id
     @name = name

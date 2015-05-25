@@ -4,6 +4,11 @@ RSpec.describe Rental, :type => :model do
 
   describe 'validations' do
 
+    it 'must have a printer id' do
+      rental = Rental.create(printer_id: nil)
+      expect(rental.errors[:printer_id]).to include("can't be blank")
+    end
+
     it 'must include a start date and end date' do
       rental = Rental.create
       expect(rental.errors[:start_date]).to include("can't be blank")
@@ -203,6 +208,16 @@ RSpec.describe Rental, :type => :model do
         {:start_date=>DateTime.parse("Wed, 18 Mar 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Wed, 01 Apr 2015 00:00:00 +0000")},
         {:start_date=>DateTime.parse("Thu, 23 Apr 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Thu, 31 Dec 2015 00:00:00 +0000")}
       ])
+    end
+
+  end
+
+  describe 'printer' do
+
+    it 'returns the printer' do
+      printer = Printer.all.first
+      rental = FactoryGirl.create(:rental, printer_id: printer.id)
+      expect(rental.printer.id).to eq(printer.id)
     end
 
   end
