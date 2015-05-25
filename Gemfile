@@ -58,7 +58,7 @@ gem 'geocoder', '~> 1.2.6'
 
 gem 'capistrano', '~> 2.15.5', group: :development
 gem 'letter_opener', '~> 1.2.0', group: :development
-gem 'rvm-capistrano', '~> 1.5.1', group: :development
+gem 'rvm-capistrano', '~> 1.5.1', group: :development, require: false
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1.0'
