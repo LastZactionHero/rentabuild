@@ -13,11 +13,22 @@ describe RentalsController do
       expect(body["error"]).to eq("Start date and duration must be present")
     end
 
-    it 'returns successfully if dates are available' do
+    it 'returns 400 if a printer is not provided' do
       start_date = 20.days.from_now
       duration = 7
 
       get 'validate_dates', start_date: start_date.to_s, duration: duration
+      expect(response.status).to eq(400)
+
+      body = JSON.parse(response.body)
+      expect(body["errors"]["printer_id"]).to include("can't be blank")
+    end
+
+    it 'returns successfully if dates are available' do
+      start_date = 20.days.from_now
+      duration = 7
+
+      get 'validate_dates', start_date: start_date.to_s, duration: duration, printer_id: 0
       expect(response).to be_success
       body = JSON.parse(response.body)
       expect(body["available"]).to eq(true)
@@ -29,7 +40,7 @@ describe RentalsController do
       duration = 7
       FactoryGirl.create(:rental, start_date: start_date, end_date: end_date)
 
-      get 'validate_dates', start_date: start_date.to_s, duration: duration
+      get 'validate_dates', start_date: start_date.to_s, duration: duration, printer_id: 0
       expect(response).to be_success
       body = JSON.parse(response.body)
       expect(body["available"]).to eq(false)
@@ -52,7 +63,7 @@ describe RentalsController do
       duration = 7
       shipping = 'local'
 
-      get 'quote', duration: duration, shipping: shipping
+      get 'quote', duration: duration, shipping: shipping, printer_id: 0
       expect(response).to be_success
 
       body = JSON.parse(response.body)
@@ -66,7 +77,7 @@ describe RentalsController do
       duration = 14
       shipping = 'local'
 
-      get 'quote', duration: duration, shipping: shipping
+      get 'quote', duration: duration, shipping: shipping, printer_id: 0
       expect(response).to be_success
 
       body = JSON.parse(response.body)
@@ -80,7 +91,7 @@ describe RentalsController do
       duration = 21
       shipping = 'local'
 
-      get 'quote', duration: duration, shipping: shipping
+      get 'quote', duration: duration, shipping: shipping, printer_id: 0
       expect(response).to be_success
 
       body = JSON.parse(response.body)
@@ -94,7 +105,7 @@ describe RentalsController do
       duration = 30
       shipping = 'local'
 
-      get 'quote', duration: duration, shipping: shipping
+      get 'quote', duration: duration, shipping: shipping, printer_id: 0
       expect(response).to be_success
 
       body = JSON.parse(response.body)
@@ -108,7 +119,7 @@ describe RentalsController do
       duration = 7
       shipping = 'national'
 
-      get 'quote', duration: duration, shipping: shipping
+      get 'quote', duration: duration, shipping: shipping, printer_id: 0
       expect(response).to be_success
 
       body = JSON.parse(response.body)
@@ -125,10 +136,11 @@ describe RentalsController do
         duration = 7
         shipping = 'national'
 
-        get 'quote', 
-          duration: duration, 
-          shipping: shipping, 
-          promo_code: promo_code.code
+        get 'quote',
+          duration: duration,
+          shipping: shipping,
+          promo_code: promo_code.code,
+          printer_id: 0
 
         expect(response).to be_success
         body = JSON.parse(response.body)
@@ -145,10 +157,11 @@ describe RentalsController do
         duration = 7
         shipping = 'national'
 
-        get 'quote', 
-          duration: duration, 
-          shipping: shipping, 
-          promo_code: promo_code.code
+        get 'quote',
+          duration: duration,
+          shipping: shipping,
+          promo_code: promo_code.code,
+          printer_id: 0
 
         expect(response).to be_success
         body = JSON.parse(response.body)
@@ -165,10 +178,11 @@ describe RentalsController do
         duration = 7
         shipping = 'national'
 
-        get 'quote', 
-          duration: duration, 
-          shipping: shipping, 
-          promo_code: promo_code.code
+        get 'quote',
+          duration: duration,
+          shipping: shipping,
+          promo_code: promo_code.code,
+          printer_id: 0
 
         expect(response).to be_success
         body = JSON.parse(response.body)
@@ -184,10 +198,11 @@ describe RentalsController do
         duration = 7
         shipping = 'national'
 
-        get 'quote', 
-          duration: duration, 
-          shipping: shipping, 
-          promo_code: "INVALID CODE"
+        get 'quote',
+          duration: duration,
+          shipping: shipping,
+          promo_code: "INVALID CODE",
+          printer_id: 0
 
         expect(response).to be_success
         body = JSON.parse(response.body)
@@ -204,10 +219,11 @@ describe RentalsController do
         duration = 7
         shipping = 'national'
 
-        get 'quote', 
-          duration: duration, 
-          shipping: shipping, 
-          promo_code: promo_code.code
+        get 'quote',
+          duration: duration,
+          shipping: shipping,
+          promo_code: promo_code.code,
+          printer_id: 0
 
         expect(response).to be_success
         body = JSON.parse(response.body)
@@ -250,7 +266,11 @@ describe RentalsController do
     end
 
     it 'responds with an error if contact information is not provided' do
-      post 'rent', start_date: start_date, duration: duration, shipping: shipping
+      post 'rent',
+        start_date: start_date,
+        duration: duration,
+        shipping: shipping,
+        printer_id: 0
 
       expect(response.status).to eq(400)
       body = JSON.parse(response.body)
@@ -265,15 +285,16 @@ describe RentalsController do
     it 'responds with an error if dates are not available' do
       FactoryGirl.create(:rental, start_date: start_date, end_date: start_date + duration.day)
 
-      post 'rent', start_date: start_date, 
-        duration: duration, 
+      post 'rent', start_date: start_date,
+        duration: duration,
         shipping: shipping,
         name: name,
         phone: phone,
         email: email,
         address_line_1: address_line_1,
         zipcode: zipcode,
-        stripe_card_token: stripe_card_token
+        stripe_card_token: stripe_card_token,
+        printer_id: 0
 
       expect(response.status).to eq(400)
       body = JSON.parse(response.body)
@@ -282,26 +303,8 @@ describe RentalsController do
 
     it 'successfully creates a rental' do
       VCR.use_cassette("successful_rental") do
-        post 'rent', start_date: start_date, 
-          duration: duration, 
-          shipping: shipping,
-          name: name,
-          phone: phone,
-          email: email,
-          address_line_1: address_line_1,
-          zipcode: zipcode,
-          stripe_card_token: stripe_card_token
-
-        expect(response.status).to eq(200)
-      end
-    end
-
-    it 'successfully creates a rental with a promo code' do
-      promo_code = FactoryGirl.create(:promo_code, amount_off: 50, free_shipping: true)
-
-      VCR.use_cassette("successful_rental") do
-        post 'rent', start_date: start_date, 
-          duration: duration, 
+        post 'rent', start_date: start_date,
+          duration: duration,
           shipping: shipping,
           name: name,
           phone: phone,
@@ -309,7 +312,49 @@ describe RentalsController do
           address_line_1: address_line_1,
           zipcode: zipcode,
           stripe_card_token: stripe_card_token,
-          promo_code: promo_code.code
+          printer_id: 0
+
+        expect(response.status).to eq(200)
+      end
+    end
+
+    it 'successfully creates a rental for a different printer' do
+      VCR.use_cassette("successful_rental") do
+        printer_id = 1
+
+        post 'rent', start_date: start_date,
+          duration: duration,
+          shipping: shipping,
+          name: name,
+          phone: phone,
+          email: email,
+          address_line_1: address_line_1,
+          zipcode: zipcode,
+          stripe_card_token: stripe_card_token,
+          printer_id: printer_id
+
+        expect(response.status).to eq(200)
+
+        rental = Rental.first
+        expect(rental.printer.id).to eq(printer_id)
+      end
+    end
+
+    it 'successfully creates a rental with a promo code' do
+      promo_code = FactoryGirl.create(:promo_code, amount_off: 50, free_shipping: true)
+
+      VCR.use_cassette("successful_rental") do
+        post 'rent', start_date: start_date,
+          duration: duration,
+          shipping: shipping,
+          name: name,
+          phone: phone,
+          email: email,
+          address_line_1: address_line_1,
+          zipcode: zipcode,
+          stripe_card_token: stripe_card_token,
+          promo_code: promo_code.code,
+          printer_id: 0
 
         expect(response.status).to eq(200)
 
@@ -318,7 +363,7 @@ describe RentalsController do
         expect(rental.amount).to eq(100)
       end
     end
-    
+
   end
 
 end

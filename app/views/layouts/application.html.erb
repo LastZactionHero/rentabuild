@@ -8,7 +8,7 @@
     <%= render partial: 'layouts/analytics' %>
 
     <%= csrf_meta_tags %>
-    
+
     <meta name="google-site-verification" content="Z_w-rF8_waeuE8xIBS0Bmqw4_uhOeOxPf67eMYDZjSw" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,10 +18,10 @@
   </head>
 
   <body id="contact-us">
-    
+
     <%= render partial: "/layouts/navbar", locals: {header: "normal", sign_up: false} %>
 
-    <div class='container'>  
+    <div class='container'>
 
       <% if flash[:notice] %>
         <div class='alert alert-success'><%= flash[:notice] %></div>
@@ -33,11 +33,13 @@
 
       <%= yield %>
     </div>
-  
+
     <%= render partial: "/layouts/footer" %>
 
-    <%= yield :javascript %>      
+    <%= yield :javascript %>
   </body>
-</html>
 
- 
+  <script type='text/javascript'>
+    var stripePublicToken = '<%= APP_SETTINGS["stripe"]["api_publish"] %>';  
+  </script>
+</html>

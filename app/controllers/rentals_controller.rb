@@ -1,6 +1,7 @@
 class RentalsController < ApplicationController
   before_filter :find_dates_or_fail, only: [:validate_dates, :rent]
   before_filter :find_cost_or_fail, only: [:quote, :rent]
+  before_filter :find_printer_or_fail, only: [:quote, :rent, :validate_dates]
 
   protect_from_forgery except: [:rent]
 
@@ -9,12 +10,12 @@ class RentalsController < ApplicationController
   end
 
   def validate_dates
-    available = Rental.are_dates_available?(@start_date, @end_date)
+    available = Rental.are_dates_available?(@start_date, @end_date, @printer.id)
 
     if available
       render status: 200, json: {available: true}
     else
-      windows = Rental.rental_windows(@duration)
+      windows = Rental.rental_windows(minimum_days: @duration)
       render status: 200, json: {available: false, windows: windows}
     end
 
@@ -22,7 +23,7 @@ class RentalsController < ApplicationController
 
   def quote
     body = {
-      model: "Ultimaker II",
+      model: @printer.name,
       shipping_cost: @shipping_cost,
       rental_cost: @rental_cost,
       total_cost: @total_cost
@@ -50,7 +51,8 @@ class RentalsController < ApplicationController
       zipcode: params.delete(:zipcode),
       amount: @total_cost,
       stripe_card_token: card_token,
-      promo_code: @promo_code
+      promo_code: @promo_code,
+      printer_id: @printer.id
     )
 
     # Validate Rental
@@ -149,6 +151,14 @@ class RentalsController < ApplicationController
     end
 
     @total_cost = @rental_cost + @shipping_cost
+  end
+
+  def find_printer_or_fail
+    @printer = Printer.find_by_id(params[:printer_id])
+    unless @printer && params[:printer_id]
+      render status: 400, json: {errors: {printer_id: ["can't be blank"]}}
+      return
+    end
   end
 
   def find_and_validate_promo_code(duration)

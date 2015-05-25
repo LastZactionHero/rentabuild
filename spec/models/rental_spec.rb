@@ -40,6 +40,25 @@ RSpec.describe Rental, :type => :model do
       expect(second_rental.errors[:start_date]).to include("is unavailable")
     end
 
+    it 'can overlap with the start of another rental of a different model' do
+      first_rental_start_date = DateTime.parse("March 3, 2015")
+      first_rental_end_date = DateTime.parse("March 20, 2015")
+      first_rental = FactoryGirl.create(:rental,
+        printer_id: 0,
+        start_date: first_rental_start_date,
+        end_date: first_rental_end_date)
+
+      second_rental_start_date = DateTime.parse("Februrary 20, 2015")
+      second_rental_end_date = DateTime.parse("March 2, 2015")
+      second_rental = Rental.create(
+        printer_id: 1,
+        start_date: second_rental_start_date,
+        end_date: second_rental_end_date
+      )
+
+      expect(second_rental.errors[:start_date]).not_to include("is unavailable")
+    end
+
     it 'cannot overlap with the end of another rental' do
       first_rental_start_date = DateTime.parse("March 3, 2015")
       first_rental_end_date = DateTime.parse("March 20, 2015")
@@ -187,8 +206,10 @@ RSpec.describe Rental, :type => :model do
       Timecop.freeze(new_time)
 
       windows = Rental.rental_windows()
+      expect(windows.length).to eq(2)
 
-      expect(windows).to eq([
+      expect(windows[0][:printer].id).to eq(0)
+      expect(windows[0][:windows]).to eq([
         {start_date: DateTime.parse("Thu, 01 Jan 2015 00:00:00 UTC +00:00"),
          end_date: DateTime.parse("Sat, 24 Jan 2015 00:00:00 UTC +00:00")},
         {start_date: DateTime.parse("Wed, 18 Mar 2015 00:00:00 UTC +00:00"),
@@ -202,8 +223,10 @@ RSpec.describe Rental, :type => :model do
       new_time = Time.local(2015, 1, 1, 0, 0, 0)
       Timecop.freeze(new_time)
 
-      windows = Rental.rental_windows(15)
-      expect(windows).to eq([
+      windows = Rental.rental_windows(minimum_days: 15)
+      expect(windows.length).to eq(2)
+
+      expect(windows[0][:windows]).to eq([
         {:start_date=>DateTime.parse("Thu, 01 Jan 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Sat, 24 Jan 2015 00:00:00 +0000")},
         {:start_date=>DateTime.parse("Wed, 18 Mar 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Wed, 01 Apr 2015 00:00:00 +0000")},
         {:start_date=>DateTime.parse("Thu, 23 Apr 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Thu, 31 Dec 2015 00:00:00 +0000")}

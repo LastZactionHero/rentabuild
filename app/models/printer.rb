@@ -9,7 +9,7 @@ class Printer
   end
 
   def self.find_by_id(id)
-    Printer.all.select{|p| p.id == id}.first
+    Printer.all.select{|p| p.id == id.to_i}.first
   end
 
   def initialize(id, name, priority)

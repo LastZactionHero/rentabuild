@@ -27,12 +27,24 @@
       <div ng-show="currentStep() == 'time_duration'">
         <h3>Rental Dates</h3>
         <p>
-          We are currently renting the <strong>Ultimaker II</strong> printer.
-          <%= link_to "(More Info)", "https://ultimaker.com/en/products/ultimaker-2-family", target: :blank %>
+          We are currently renting the
+          <strong><%= link_to "Ultimaker II", "https://ultimaker.com/en/products/ultimaker-2-family", target: :blank %></strong>
+          and
+          <strong><%= link_to "Lulzbot Mini", "https://www.lulzbot.com/products/lulzbot-mini-3d-printer", target: :blank %></strong>
         </p>
         <hr/>
 
         <div class='form-horizontal'>
+          <div class="form-group">
+            <label for="inputPrinter" class="col-sm-2 control-label">Printer</label>
+            <div class="col-sm-5">
+              <select class="form-control" ng-model="printerId" ng-change="datesChanged()">
+                <option value="0">Ultimaker II</option>
+                <option value="1">Lulzbot Mini</option>
+              </select>
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="inputEmail3" class="col-sm-2 control-label">Rental Length</label>
             <div class="col-sm-5">
@@ -74,9 +86,9 @@
 
         <div class='alert alert-warning' ng-show="dateError">
           {{dateError}}
-          <ul ng-show="suggestedDates">
-            <li ng-repeat="date in suggestedDates">
-              Starting {{date.start_date | date: "M/dd/yyyy"}}, ending {{date.end_date | date: "M/dd/yyyy"}}
+          <ul ng-show="suggestedDates" ng-repeat="printer in suggestedDates">
+            <li ng-repeat="date in printer.windows">
+              {{printer.printer.name}}, starting after {{date.start_date | date: "M/dd/yyyy"}}, ending before {{date.end_date | date: "M/dd/yyyy"}}
             </li>
           </ul>
         </div>

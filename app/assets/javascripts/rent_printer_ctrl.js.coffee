@@ -68,6 +68,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
 
   $scope.startDate = null
   $scope.rentalDays = null
+  $scope.printerId = 0
   $scope.showStartDate = false
   $scope.dateError = null
   $scope.datesOk = false
@@ -102,13 +103,15 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
       $scope.checkDates($scope.startDate, $scope.rentalDays)
 
   $scope.checkDates = (startDate, rentalDays) ->
-    $http.get("/rentals/validate_dates?start_date=" + startDate + "&duration=" + rentalDays).success( (data) ->
+    url = "/rentals/validate_dates?start_date=" + startDate + "&duration=" + rentalDays
+    url += "&printer_id=" + $scope.printerId
+    $http.get(url).success( (data) ->
       $scope.datesOk = data.available
 
       if $scope.datesOk
         $scope.getQuote($scope.rentalDays, $scope.shipping, $scope.promoCode)
       else
-        $scope.dateError = "Ack! This printer is not available for those dates. Here are some other dates that are available:"
+        $scope.dateError = "Ack! This printer is not available for those dates. Here are some other dates and printers that are available:"
         $scope.suggestedDates = data.windows
 
     )
@@ -126,9 +129,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
   $scope.stripeCreateToken = ->
     $scope.submitting = true
 
-    #pk_test_lHvqaoJXXkyU2QpUHzsoNtsH
-    #pk_live_JMNFrzKGf9KRDiSOmj3PMo6w
-    Stripe.setPublishableKey('pk_live_JMNFrzKGf9KRDiSOmj3PMo6w');
+    Stripe.setPublishableKey(stripePublicToken);
 
     Stripe.card.createToken({
       number: $scope.cardNumber,
@@ -163,7 +164,8 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
         address_line_1: $scope.addressLine1,
         address_line_2: $scope.addressLine2,
         zipcode: $scope.zipcode,
-        stripe_card_token: stripeToken
+        stripe_card_token: stripeToken,
+        printer_id: $scope.printerId
       }
     ).success(->
       window.location = "/rentals/success"
@@ -177,13 +179,12 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
     return unless duration && shipping
 
     url = "/rentals/quote?duration=" + duration + "&shipping=" + shipping
+    url += "&printer_id=" + $scope.printerId
     url += "&promo_code=" + promoCode if promoCode
 
     $scope.quote = null
     $http.get(url).success( (data) ->
       $scope.quote = data
-
-      console.log($scope.quote)
     )
 
   $scope.validateFields = ->
@@ -225,7 +226,6 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
   $scope.promoCode = null
 
   $scope.applyPromoCode = ->
-    console.log("applyPromoCode")
     $scope.getQuote($scope.rentalDays, $scope.shipping, $scope.promoCode)
 
 ]
