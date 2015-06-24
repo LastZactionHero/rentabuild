@@ -61,98 +61,12 @@
         <%= image_tag "feature_filament.png", class: "img-responsive" %>
       </div>
     </div>
-  </div>    
+  </div>
 </div>
 
 <div id="pricing">
   <div class="container">
-    <div class="row header">
-      <div class="col-md-12">
-        <h3>All rentals include everything you need to get started.</h3>
-        <p>Shipping anywhere in the continental US.</p>
-      </div>
-    </div>
-    <div class="row charts">
-      <div class="col-md-4">
-        <div class="chart first">
-          <div class="quantity">
-            <span class="dollar">$</span>
-            <span class="price">150</span>
-          </div>
-          <div class="plan-name">One Week</div>
-          <div class="specs">
-            <div class="spec">
-              <span class="variable">1/2 lb</span>
-              plastic filament (PLA)
-            </div>
-            <div class="spec">
-              <span class="variable">Training</span>
-              videos and resources
-            </div>
-            <div class="spec">
-              <span class="variable">Support</span>
-              by email, chat, phone, Skype, and Facetime
-            </div>
-          </div>
-          <a class="btn-signup button-clear" href="/rentals/new">
-            <span>Get started</span>
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="chart featured">
-          <div class="popular">Most popular</div>
-          <div class="quantity">
-            <span class="dollar">$</span>
-            <span class="price">250</span>
-          </div>
-          <div class="plan-name">Two Weeks</div>
-          <div class="specs">
-            <div class="spec">
-              <span class="variable">1/2 lb</span>
-              plastic filament (PLA)
-            </div>
-            <div class="spec">
-              <span class="variable">Training</span>
-              videos and resources
-            </div>
-            <div class="spec">
-              <span class="variable">Support</span>
-              by email, chat, phone, Skype, and Facetime
-            </div>
-          </div>
-          <a class="btn-signup button-clear" href="/rentals/new">
-            <span>Get started</span>
-          </a>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="chart last">
-          <div class="quantity">
-            <span class="dollar">$</span>
-            <span class="price">400</span>
-          </div>
-          <div class="plan-name">One Month</div>
-          <div class="specs">
-            <div class="spec">
-              <span class="variable">1/2 lb</span>
-              plastic filament (PLA)
-            </div>
-            <div class="spec">
-              <span class="variable">Training</span>
-              videos and resources
-            </div>
-            <div class="spec">
-              <span class="variable">Support</span>
-              by email, chat, phone, Skype, and Facetime
-            </div>
-          </div>
-          <a class="btn-signup button-clear" href="/rentals/new">
-            <span>Get started</span>
-          </a>
-        </div>
-      </div>
-    </div>
+      <%= render partial: "home/pricing_table" %>
   </div>
 </div>
 

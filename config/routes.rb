@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "contact_us" => "home#contact_us"
   post "contact_us" => "home#contact_us_email"
   get "how_it_works" => "home#how_it_works"
+  get "pricing" => "home#pricing"
   
   get 'dashboard' => 'dashboard#index'
 
@@ -20,7 +21,7 @@ Rails.application.routes.draw do
       get :recent
     end
   end
-  
+
   resources :rentals, only: [:new] do
     collection do
       get 'validate_dates'
@@ -30,7 +31,7 @@ Rails.application.routes.draw do
       get 'agreement'
     end
   end
-  
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

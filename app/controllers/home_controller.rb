@@ -27,6 +27,10 @@ class HomeController < ApplicationController
     render layout: "application"
   end
 
+  def pricing
+    render layout: "application"
+  end
+
   private
 
   def redirect_if_logged_in
