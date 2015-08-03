@@ -129,7 +129,8 @@ class RentalsController < ApplicationController
       7 => 150.00,
       14 => 250.00,
       21 => 350.00,
-      30 => 400.00
+      30 => 400.00,
+      90 => 1100.00,
     }[@duration]
 
     @shipping_cost = {

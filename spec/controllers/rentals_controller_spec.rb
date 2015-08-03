@@ -115,6 +115,20 @@ describe RentalsController do
       expect(body["shipping_cost"]).to eq(0)
     end
 
+    it 'returns a cost for 90 days' do
+      duration = 90
+      shipping = 'local'
+
+      get 'quote', duration: duration, shipping: shipping, printer_id: 0
+      expect(response).to be_success
+
+      body = JSON.parse(response.body)
+      expect(body["rental_cost"]).to eq(1100.00)
+      expect(body["total_cost"]).to eq(1100.00)
+      expect(body["model"]).to eq("Ultimaker II")
+      expect(body["shipping_cost"]).to eq(0)
+    end
+
     it 'returns a cost for national shipping' do
       duration = 7
       shipping = 'national'
