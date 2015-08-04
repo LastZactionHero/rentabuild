@@ -3,8 +3,9 @@ class Printer
 
   def self.all
     [
-      {id: 0, name: "Ultimaker II", priority: 0},
-      {id: 1, name: "Lulzbot Mini", priority: 1}
+      {id: 0, name: "Ultimaker II", priority: 2},
+      {id: 1, name: "Lulzbot Mini", priority: 1},
+      {id: 2, name: "Printrbot Simple Metal", priority: 0}
     ].map{|p| Printer.new(p[:id], p[:name], p[:priority])}
   end
 

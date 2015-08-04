@@ -28,6 +28,7 @@
         <h3>Rental Dates</h3>
         <p>
           We are currently renting the
+          <strong><%= link_to "Printrbot Simple Metal", "https://www.3dhubs.com/3d-printers/printrbot-simple-metal", target: :blank %></strong>,
           <strong><%= link_to "Ultimaker II", "https://ultimaker.com/en/products/ultimaker-2-family", target: :blank %></strong>
           and
           <strong><%= link_to "Lulzbot Mini", "https://www.lulzbot.com/products/lulzbot-mini-3d-printer", target: :blank %></strong>
@@ -39,6 +40,7 @@
             <label for="inputPrinter" class="col-sm-2 control-label">Printer</label>
             <div class="col-sm-5">
               <select class="form-control" ng-model="printerId" ng-change="datesChanged()">
+                <option value="2">Printrbot Simple Metal</option>
                 <option value="0">Ultimaker II</option>
                 <option value="1">Lulzbot Mini</option>
               </select>

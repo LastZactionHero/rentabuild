@@ -68,7 +68,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
 
   $scope.startDate = null
   $scope.rentalDays = null
-  $scope.printerId = 0
+  $scope.printerId = 2
   $scope.showStartDate = false
   $scope.dateError = null
   $scope.datesOk = false
