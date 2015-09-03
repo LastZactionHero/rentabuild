@@ -44,7 +44,7 @@ describe RentalsController do
       expect(response).to be_success
       body = JSON.parse(response.body)
       expect(body["available"]).to eq(false)
-      expect(body["windows"].length).to eq(2)
+      expect(body["windows"].length).to eq(3)
     end
 
   end

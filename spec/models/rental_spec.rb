@@ -206,7 +206,7 @@ RSpec.describe Rental, :type => :model do
       Timecop.freeze(new_time)
 
       windows = Rental.rental_windows()
-      expect(windows.length).to eq(2)
+      expect(windows.length).to eq(3)
 
       expect(windows[0][:printer].id).to eq(0)
       expect(windows[0][:windows]).to eq([
@@ -224,7 +224,7 @@ RSpec.describe Rental, :type => :model do
       Timecop.freeze(new_time)
 
       windows = Rental.rental_windows(minimum_days: 15)
-      expect(windows.length).to eq(2)
+      expect(windows.length).to eq(3)
 
       expect(windows[0][:windows]).to eq([
         {:start_date=>DateTime.parse("Thu, 01 Jan 2015 00:00:00 +0000"), :end_date=>DateTime.parse("Sat, 24 Jan 2015 00:00:00 +0000")},

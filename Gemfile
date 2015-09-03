@@ -55,6 +55,7 @@ gem 'stripe', '~> 1.11.0'
 gem 'omniauth-twitter', '~> 1.0.1'
 gem 'whenever', '~> 0.9.2'
 gem 'geocoder', '~> 1.2.6'
+gem 'rails_admin', '~> 0.7.0'
 
 gem 'capistrano', '~> 2.15.5', group: :development
 gem 'letter_opener', '~> 1.2.0', group: :development

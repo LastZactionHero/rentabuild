@@ -6,17 +6,23 @@ describe Printer do
 
     it 'lists all printers' do
       printers = Printer.all
-      expect(printers.length).to eq(2)
+      expect(printers.length).to eq(3)
 
       printer_a = printers[0]
       expect(printer_a.id).to eq(0)
       expect(printer_a.name).to eq("Ultimaker II")
-      expect(printer_a.priority).to eq(0)
+      expect(printer_a.priority).to eq(2)
 
       printer_b = printers[1]
       expect(printer_b.id).to eq(1)
       expect(printer_b.name).to eq("Lulzbot Mini")
       expect(printer_b.priority).to eq(1)
+
+      printer_c = printers[2]
+      expect(printer_c.id).to eq(2)
+      expect(printer_c.name).to eq("Printrbot Simple Metal")
+      expect(printer_c.priority).to eq(0)
+
     end
 
   end

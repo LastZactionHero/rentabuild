@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  devise_for :users
   root to: "home#index"
   get "contact_us" => "home#contact_us"
   post "contact_us" => "home#contact_us_email"
   get "how_it_works" => "home#how_it_works"
   get "pricing" => "home#pricing"
-  
+
   get 'dashboard' => 'dashboard#index'
 
   resources :plans, only: [:index] do
