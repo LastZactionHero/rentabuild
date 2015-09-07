@@ -5,7 +5,7 @@ class Printer
     [
       {id: 0, name: "Ultimaker II", priority: 2, inventory: 1},
       {id: 1, name: "Lulzbot Mini", priority: 1, inventory: 1},
-      {id: 2, name: "Printrbot Simple Metal", priority: 0, inventory: 6}
+      {id: 2, name: "Printrbot Simple Metal", priority: 0, inventory: 2}
     ].map{|p| Printer.new(p[:id], p[:name], p[:priority], p[:inventory])}
   end
 
