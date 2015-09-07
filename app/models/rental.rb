@@ -54,7 +54,9 @@ class Rental < ActiveRecord::Base
       start_date - 2 * PREP_TIME_DAYS.days, end_date + 2 * PREP_TIME_DAYS.days
     ).where(printer_id: printer_id)
     other_rentals = other_rentals.where("id != ?", id) if id
-    other_rentals.empty?
+
+    printer = Printer.find_by_id(printer_id)
+    other_rentals.count < printer.inventory
   end
 
   def printer

@@ -14,5 +14,6 @@ FactoryGirl.define do
     stripe_card_token 'tok_123'
     stripe_charge_id 'ch_123'
     amount 200.00
+    printer_id 0
   end
 end
