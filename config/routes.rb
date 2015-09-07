@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post "contact_us" => "home#contact_us_email"
   get "how_it_works" => "home#how_it_works"
   get "pricing" => "home#pricing"
+  get "printrbot" => "home#printrbot"
 
   get 'dashboard' => 'dashboard#index'
 

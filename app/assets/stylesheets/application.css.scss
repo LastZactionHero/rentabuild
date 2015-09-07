@@ -34,7 +34,7 @@
 ul.checkout-steps {
   list-style-type: none;
   margin-top: 36px;
-  
+
   li {
     margin-bottom: 24px;
     font-size: 20px;
@@ -50,3 +50,5 @@ ul.checkout-steps {
 body {
   font-family: Lato, Helvetica, sans-serif;
 }
+
+@import "printrbot.scss"

@@ -31,6 +31,10 @@ class HomeController < ApplicationController
     render layout: "application"
   end
 
+  def printrbot
+
+  end
+  
   private
 
   def redirect_if_logged_in
