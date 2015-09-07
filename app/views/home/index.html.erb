@@ -40,7 +40,17 @@
       <div class="col-md-6 info">
         <h4>High-quality printers.</h4>
         <p>
-          Now renting the durable, dependable Ultimaker 2.
+          <%= link_to "Printrbot Simple Metal", printrbot_path %><br/>
+          Best entry-level 3D printer on the market.
+        </p>
+
+        <p>
+          <%= link_to "Lulzbot Mini", "https://www.lulzbot.com/products/lulzbot-mini-3d-printer", target: :blank %><br/>
+          Easy to use, supports wide variety of filaments.
+        </p>
+        <p>
+          <%= link_to "Ultimaker II", "https://ultimaker.com/", target: :blank %><br/>
+          Uncompromising professional quality.
         </p>
       </div>
       <div class="col-md-6 image">
@@ -61,6 +71,19 @@
         <%= image_tag "feature_filament.png", class: "img-responsive" %>
       </div>
     </div>
+    <div class="divider"></div>
+    <div class="row feature backwards">
+      <div class="col-md-6 info">
+        <h4>Try before you buy.</h4>
+        <p>
+          Find out if a printer is right for you before purchasing.<br/>
+          Keep it at the end of your rental- we'll subtract your rental fee.
+        </p>
+      </div>
+      <div class="col-md-6 image">
+        <%= image_tag "printrbot_side.png", class: "img-responsive" %>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -69,17 +92,6 @@
       <%= render partial: "home/pricing_table" %>
   </div>
 </div>
-
-<div id="slider">
-  <div class="container">
-    <div class="row header">
-      <div class="col-md-12">
-        <h3>Now renting the Ultimaker II</h3>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <div id="cta">
   <p>
