@@ -12,6 +12,7 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
   ]
   $scope.currentStepId = 0
 
+
   $scope.currentStep = ->
     $scope.steps[$scope.currentStepId]
 
@@ -81,9 +82,33 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
   $scope.email = $location.search()['email'];
   $scope.zipcode = $location.search()['zipcode'];
 
+  $scope.printerPrices = null
+
+  $scope.email = "x@y.com"
+  $scope.zipcode = 80026
+
   mixpanel.track("View Rental Page", {
     "model": $scope.requestedModel
   });
+
+  $scope.printerChanged = ->
+    $scope.datesChanged()
+    $scope.fetchPrinterPrices()
+
+  $scope.fetchPrinterPrices = ->
+    $scope.printerPrices = null
+    $http.get("/printers/" + $scope.printerId + "/prices").success( (data) ->
+      $scope.printerPrices = []
+      angular.forEach(data, (price, duration) ->
+        $scope.printerPrices.push(
+          {
+            duration: duration,
+            price: price
+          }
+        )
+      )
+      console.log($scope.printerPrices)
+    )
 
   $scope.datesChanged = ->
     $scope.dateError = null
@@ -228,4 +253,5 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
   $scope.applyPromoCode = ->
     $scope.getQuote($scope.rentalDays, $scope.shipping, $scope.promoCode)
 
+  $scope.fetchPrinterPrices()
 ]
