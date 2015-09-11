@@ -84,9 +84,6 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
 
   $scope.printerPrices = null
 
-  $scope.email = "x@y.com"
-  $scope.zipcode = 80026
-
   mixpanel.track("View Rental Page", {
     "model": $scope.requestedModel
   });

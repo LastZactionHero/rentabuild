@@ -1,7 +1,7 @@
 class RentalsController < ApplicationController
   before_filter :find_dates_or_fail, only: [:validate_dates, :rent]
-  before_filter :find_cost_or_fail, only: [:quote, :rent]
   before_filter :find_printer_or_fail, only: [:quote, :rent, :validate_dates]
+  before_filter :find_cost_or_fail, only: [:quote, :rent]
 
   protect_from_forgery except: [:rent]
 
@@ -125,13 +125,11 @@ class RentalsController < ApplicationController
     @duration ||= params.delete(:duration).to_i
     @shipping ||= params.delete(:shipping)
 
-    @rental_cost = {
-      7 => 150.00,
-      14 => 250.00,
-      21 => 350.00,
-      30 => 400.00,
-      90 => 1100.00,
-    }[@duration]
+    begin
+      @rental_cost = @printer.price_for_duration(@duration)
+    rescue Printer::InvalidDurationError
+      @rental_cost = nil
+    end
 
     @shipping_cost = {
       "local" => 0.00,

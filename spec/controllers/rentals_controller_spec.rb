@@ -52,7 +52,7 @@ describe RentalsController do
   describe 'quote' do
 
     it 'returns 400 if no date and shipping information are provided' do
-      get 'quote'
+      get 'quote', printer_id: 1
       expect(response.status).to eq(400)
       body = JSON.parse(response.body)
       expect(body["errors"]["duration"]).to eq("is not valid")
@@ -115,18 +115,17 @@ describe RentalsController do
       expect(body["shipping_cost"]).to eq(0)
     end
 
-    it 'returns a cost for 90 days' do
-      duration = 90
+    it 'returns a cost for 7 days for a different printer' do
+      duration = 7
       shipping = 'local'
 
-      get 'quote', duration: duration, shipping: shipping, printer_id: 0
+      printrbot = Printer.find_by_name("Printrbot Simple Metal")
+      get 'quote', duration: duration, shipping: shipping, printer_id: printrbot.id
       expect(response).to be_success
 
       body = JSON.parse(response.body)
-      expect(body["rental_cost"]).to eq(1100.00)
-      expect(body["total_cost"]).to eq(1100.00)
-      expect(body["model"]).to eq("Ultimaker II")
-      expect(body["shipping_cost"]).to eq(0)
+      expect(body["rental_cost"]).to eq(printrbot.price_for_duration(7))
+      expect(body["model"]).to eq(printrbot.name)
     end
 
     it 'returns a cost for national shipping' do
@@ -272,7 +271,7 @@ describe RentalsController do
     end
 
     it 'responds with an error if shipping is not provided' do
-      post 'rent', start_date: start_date, duration: duration
+      post 'rent', start_date: start_date, duration: duration, printer_id: 1
 
       expect(response.status).to eq(400)
       body = JSON.parse(response.body)
