@@ -3,6 +3,9 @@ require 'spec_helper'
 describe RentalsController do
   render_views
 
+  let(:printer){Printer.find_by_name("Ultimaker II")}
+  let(:shipping_cost){50.00}
+
   describe 'validate_dates' do
 
     it 'returns 400 if no dates are provided' do
@@ -28,7 +31,7 @@ describe RentalsController do
       start_date = 20.days.from_now
       duration = 7
 
-      get 'validate_dates', start_date: start_date.to_s, duration: duration, printer_id: 0
+      get 'validate_dates', start_date: start_date.to_s, duration: duration, printer_id: printer.id
       expect(response).to be_success
       body = JSON.parse(response.body)
       expect(body["available"]).to eq(true)
@@ -40,7 +43,7 @@ describe RentalsController do
       duration = 7
       FactoryGirl.create(:rental, start_date: start_date, end_date: end_date)
 
-      get 'validate_dates', start_date: start_date.to_s, duration: duration, printer_id: 0
+      get 'validate_dates', start_date: start_date.to_s, duration: duration, printer_id: printer.id
       expect(response).to be_success
       body = JSON.parse(response.body)
       expect(body["available"]).to eq(false)
@@ -63,12 +66,14 @@ describe RentalsController do
       duration = 7
       shipping = 'local'
 
-      get 'quote', duration: duration, shipping: shipping, printer_id: 0
+      get 'quote', duration: duration, shipping: shipping, printer_id: printer.id
       expect(response).to be_success
 
+      rental_cost = printer.price_for_duration(duration)
+
       body = JSON.parse(response.body)
-      expect(body["rental_cost"]).to eq(150.00)
-      expect(body["total_cost"]).to eq(150.00)
+      expect(body["rental_cost"]).to eq(rental_cost)
+      expect(body["total_cost"]).to eq(rental_cost)
       expect(body["model"]).to eq("Ultimaker II")
       expect(body["shipping_cost"]).to eq(0)
     end
@@ -77,40 +82,14 @@ describe RentalsController do
       duration = 14
       shipping = 'local'
 
-      get 'quote', duration: duration, shipping: shipping, printer_id: 0
+      get 'quote', duration: duration, shipping: shipping, printer_id: printer.id
       expect(response).to be_success
 
-      body = JSON.parse(response.body)
-      expect(body["rental_cost"]).to eq(250.00)
-      expect(body["total_cost"]).to eq(250.00)
-      expect(body["model"]).to eq("Ultimaker II")
-      expect(body["shipping_cost"]).to eq(0)
-    end
-
-    it 'returns a cost for 21 days' do
-      duration = 21
-      shipping = 'local'
-
-      get 'quote', duration: duration, shipping: shipping, printer_id: 0
-      expect(response).to be_success
+      rental_cost = printer.price_for_duration(duration)
 
       body = JSON.parse(response.body)
-      expect(body["rental_cost"]).to eq(350.00)
-      expect(body["total_cost"]).to eq(350.00)
-      expect(body["model"]).to eq("Ultimaker II")
-      expect(body["shipping_cost"]).to eq(0)
-    end
-
-    it 'returns a cost for 30 days' do
-      duration = 30
-      shipping = 'local'
-
-      get 'quote', duration: duration, shipping: shipping, printer_id: 0
-      expect(response).to be_success
-
-      body = JSON.parse(response.body)
-      expect(body["rental_cost"]).to eq(400.00)
-      expect(body["total_cost"]).to eq(400.00)
+      expect(body["rental_cost"]).to eq(rental_cost)
+      expect(body["total_cost"]).to eq(rental_cost)
       expect(body["model"]).to eq("Ultimaker II")
       expect(body["shipping_cost"]).to eq(0)
     end
@@ -132,14 +111,16 @@ describe RentalsController do
       duration = 7
       shipping = 'national'
 
-      get 'quote', duration: duration, shipping: shipping, printer_id: 0
+      get 'quote', duration: duration, shipping: shipping, printer_id: printer.id
       expect(response).to be_success
 
+      rental_cost = printer.price_for_duration(duration)
+
       body = JSON.parse(response.body)
-      expect(body["rental_cost"]).to eq(150.0)
+      expect(body["rental_cost"]).to eq(rental_cost)
       expect(body["model"]).to eq("Ultimaker II")
-      expect(body["shipping_cost"]).to eq(50.00)
-      expect(body["total_cost"]).to eq(200.00)
+      expect(body["shipping_cost"]).to eq(shipping_cost)
+      expect(body["total_cost"]).to eq(rental_cost + shipping_cost)
     end
 
     describe 'promo codes' do
@@ -153,13 +134,15 @@ describe RentalsController do
           duration: duration,
           shipping: shipping,
           promo_code: promo_code.code,
-          printer_id: 0
+          printer_id: printer.id
+
+        rental_cost = printer.price_for_duration(duration)
 
         expect(response).to be_success
         body = JSON.parse(response.body)
-        expect(body["rental_cost"]).to eq(150.0)
+        expect(body["rental_cost"]).to eq(rental_cost)
         expect(body["shipping_cost"]).to eq(0.00)
-        expect(body["total_cost"]).to eq(150.00)
+        expect(body["total_cost"]).to eq(rental_cost)
         expect(body["promo_code"]["code"]).to eq(promo_code.code)
         expect(body["promo_code"]["description"]).to eq(promo_code.description)
         expect(body["promo_code"]["valid"]).to eq(true)
@@ -174,13 +157,15 @@ describe RentalsController do
           duration: duration,
           shipping: shipping,
           promo_code: promo_code.code,
-          printer_id: 0
+          printer_id: printer.id
+
+        rental_cost = printer.price_for_duration(duration)
 
         expect(response).to be_success
         body = JSON.parse(response.body)
-        expect(body["rental_cost"]).to eq(100.0)
-        expect(body["shipping_cost"]).to eq(50.00)
-        expect(body["total_cost"]).to eq(150.00)
+        expect(body["rental_cost"]).to eq(rental_cost - promo_code.amount_off)
+        expect(body["shipping_cost"]).to eq(shipping_cost)
+        expect(body["total_cost"]).to eq(rental_cost + shipping_cost - promo_code.amount_off)
         expect(body["promo_code"]["code"]).to eq(promo_code.code)
         expect(body["promo_code"]["description"]).to eq(promo_code.description)
         expect(body["promo_code"]["valid"]).to eq(true)
@@ -195,13 +180,15 @@ describe RentalsController do
           duration: duration,
           shipping: shipping,
           promo_code: promo_code.code,
-          printer_id: 0
+          printer_id: printer.id
+
+        rental_cost = printer.price_for_duration(duration)
 
         expect(response).to be_success
         body = JSON.parse(response.body)
-        expect(body["rental_cost"]).to eq(100.0)
-        expect(body["shipping_cost"]).to eq(50.00)
-        expect(body["total_cost"]).to eq(150.00)
+        expect(body["rental_cost"]).to eq(rental_cost - promo_code.amount_off)
+        expect(body["shipping_cost"]).to eq(shipping_cost)
+        expect(body["total_cost"]).to eq(rental_cost + shipping_cost - promo_code.amount_off)
         expect(body["promo_code"]["code"]).to eq(promo_code.code)
         expect(body["promo_code"]["description"]).to eq(promo_code.description)
         expect(body["promo_code"]["valid"]).to eq(true)
@@ -215,13 +202,15 @@ describe RentalsController do
           duration: duration,
           shipping: shipping,
           promo_code: "INVALID CODE",
-          printer_id: 0
+          printer_id: printer.id
+
+        rental_cost = printer.price_for_duration(duration)
 
         expect(response).to be_success
         body = JSON.parse(response.body)
-        expect(body["rental_cost"]).to eq(150.0)
-        expect(body["shipping_cost"]).to eq(50.00)
-        expect(body["total_cost"]).to eq(200.00)
+        expect(body["rental_cost"]).to eq(rental_cost)
+        expect(body["shipping_cost"]).to eq(shipping_cost)
+        expect(body["total_cost"]).to eq(rental_cost + shipping_cost)
         expect(body["promo_code"]["code"]).to eq("INVALID CODE")
         expect(body["promo_code"]["valid"]).to eq(FALSE)
         expect(body["promo_code"]["error"]).to eq("This code is not valid.")
@@ -236,13 +225,15 @@ describe RentalsController do
           duration: duration,
           shipping: shipping,
           promo_code: promo_code.code,
-          printer_id: 0
+          printer_id: printer.id
+
+        rental_cost = printer.price_for_duration(duration)
 
         expect(response).to be_success
         body = JSON.parse(response.body)
-        expect(body["rental_cost"]).to eq(150.0)
-        expect(body["shipping_cost"]).to eq(50.00)
-        expect(body["total_cost"]).to eq(200.00)
+        expect(body["rental_cost"]).to eq(rental_cost)
+        expect(body["shipping_cost"]).to eq(shipping_cost)
+        expect(body["total_cost"]).to eq(rental_cost + shipping_cost)
         expect(body["promo_code"]["code"]).to eq(promo_code.code)
         expect(body["promo_code"]["description"]).to eq(promo_code.description)
         expect(body["promo_code"]["valid"]).to eq(false)
@@ -283,7 +274,7 @@ describe RentalsController do
         start_date: start_date,
         duration: duration,
         shipping: shipping,
-        printer_id: 0
+        printer_id: printer.id
 
       expect(response.status).to eq(400)
       body = JSON.parse(response.body)
@@ -307,7 +298,7 @@ describe RentalsController do
         address_line_1: address_line_1,
         zipcode: zipcode,
         stripe_card_token: stripe_card_token,
-        printer_id: 0
+        printer_id: printer.id
 
       expect(response.status).to eq(400)
       body = JSON.parse(response.body)
@@ -325,7 +316,7 @@ describe RentalsController do
           address_line_1: address_line_1,
           zipcode: zipcode,
           stripe_card_token: stripe_card_token,
-          printer_id: 0
+          printer_id: printer.id
 
         expect(response.status).to eq(200)
       end
@@ -333,7 +324,6 @@ describe RentalsController do
 
     it 'successfully creates a rental for a different printer' do
       VCR.use_cassette("successful_rental") do
-        printer_id = 1
 
         post 'rent', start_date: start_date,
           duration: duration,
@@ -344,12 +334,12 @@ describe RentalsController do
           address_line_1: address_line_1,
           zipcode: zipcode,
           stripe_card_token: stripe_card_token,
-          printer_id: printer_id
+          printer_id: printer.id
 
         expect(response.status).to eq(200)
 
         rental = Rental.first
-        expect(rental.printer.id).to eq(printer_id)
+        expect(rental.printer.id).to eq(printer.id)
       end
     end
 
@@ -367,13 +357,16 @@ describe RentalsController do
           zipcode: zipcode,
           stripe_card_token: stripe_card_token,
           promo_code: promo_code.code,
-          printer_id: 0
+          printer_id: printer.id
 
         expect(response.status).to eq(200)
 
         rental = Rental.last
         expect(rental.promo_code).to eq(promo_code)
-        expect(rental.amount).to eq(100)
+
+        rental_cost = printer.price_for_duration(duration)
+
+        expect(rental.amount).to eq(rental_cost - promo_code.amount_off)
       end
     end
 
