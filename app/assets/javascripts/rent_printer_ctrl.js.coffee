@@ -104,8 +104,12 @@ rentalApp.controller "RentPrinterCtrl", ['$scope', '$http', '$timeout', '$locati
           }
         )
       )
-      console.log($scope.printerPrices)
+      $scope.rentalDays = $scope.printerPrices[0].duration
     )
+
+  $scope.rentalDaysChanged = (duration) ->
+    $scope.rentalDays = duration
+    $scope.datesChanged()
 
   $scope.datesChanged = ->
     $scope.dateError = null

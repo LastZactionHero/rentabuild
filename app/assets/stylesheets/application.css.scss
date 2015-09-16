@@ -47,6 +47,30 @@ ul.checkout-steps {
   }
 }
 
+ul.duration-picker {
+  list-style-type: none;
+  margin-top: 4px;
+
+  li {
+    color: #888888;
+    padding: 6px 0px;
+    cursor: pointer;
+
+    .duration {
+      font-size: 18px;
+    }
+    .price {
+      font-size: 14px;
+      margin-top: 2px;
+    }
+  }
+
+  li.selected {
+    color: #68A2EE;
+    background-color: #EEEEEE;
+  }
+}
+
 body {
   font-family: Lato, Helvetica, sans-serif;
 }

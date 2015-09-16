@@ -45,20 +45,8 @@
                   ng-model="printerId"
                   ng-change="printerChanged()">
                   <option value="2">Printrbot Simple Metal</option>
-                  <option value="0">Ultimaker II</option>
                   <option value="1">Lulzbot Mini</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="inputEmail3" class="col-sm-4 control-label">Rental Length</label>
-              <div class="col-sm-8">
-                <select class="form-control" ng-model="rentalDays" ng-change="datesChanged()">
-                  <option value="7">7 Days</option>
-                  <option value="14">14 Days</option>
-                  <option value="21">21 Days</option>
-                  <option value="30">30 Days</option>
+                  <option value="0">Ultimaker II</option>                  
                 </select>
               </div>
             </div>
@@ -88,17 +76,24 @@
                 </div>
             </div>
 
-          </div>
-          <div class='col-sm-4'>
-            <h4>Rental Fee</h4>
-            <div class='row' ng-repeat="price in printerPrices">
-              <div class='col-sm-6'>
-                {{price.duration}} days
-              </div>
-              <div class='col-sm-6'>
-                {{price.price | currency:"$"}}
-              </div>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-4 control-label">Rental Length</label>
+              <ul class="col-sm-8 duration-picker">
+
+                <li ng-repeat="price in printerPrices"
+                    class='row'
+                    ng-class="price.duration == rentalDays ? 'selected' : ''"
+                    ng-click="rentalDaysChanged(price.duration)">
+                  <div class='duration col-md-6'>
+                    {{price.duration}} Days
+                  </div>
+                  <div class='price col-md-6'>
+                    {{price.price | currency:"$"}}
+                  </div>
+                </li>
+              </ul>
             </div>
+
           </div>
 
         </div>
