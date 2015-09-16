@@ -24,7 +24,7 @@ describe Printer do
       expect(printer_c.id).to eq(2)
       expect(printer_c.name).to eq("Printrbot Simple Metal")
       expect(printer_c.priority).to eq(0)
-      expect(printer_c.inventory).to eq(2)
+      expect(printer_c.inventory).to eq(5)
 
     end
 

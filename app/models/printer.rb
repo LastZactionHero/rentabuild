@@ -34,7 +34,7 @@ class Printer
         id: 2,
         name: "Printrbot Simple Metal",
         priority: 0,
-        inventory: 2,
+        inventory: 5,
         prices: {
           7  => 120.00,
           14 => 240.00,
