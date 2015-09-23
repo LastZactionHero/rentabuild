@@ -29,7 +29,7 @@ module Rentabuild
     #   :address   => "smtp.mandrillapp.com",
     #   :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
     #   :enable_starttls_auto => true, # detects and uses STARTTLS
-    #   :user_name => "zach@rentabuild.com",
+    #   :user_name => "info@rentabuild.com",
     #   :password => APP_SETTINGS["mandrill_api_key"],
     #   :authentication => 'plain', # Mandrill supports 'plain' or 'login'
     #   :domain => 'rentabuild.com', # your domain to identify your server when connecting
@@ -41,8 +41,8 @@ module Rentabuild
         user_name:            APP_SETTINGS["gmail_username"],
         password:             APP_SETTINGS["gmail_password"],
         authentication:       'plain',
-        enable_starttls_auto: true  
-    }  
+        enable_starttls_auto: true
+    }
     config.action_mailer.raise_delivery_errors = true
 
     config.generators do |g|
