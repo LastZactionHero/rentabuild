@@ -1,101 +1,10 @@
 <div id="hero">
   <div class="container">
     <h1 class="hero-text animated fadeInDown">
-      Try a 3D printer in the comfort<br/>of your own home
+      Rentabuild is no longer renting printers.
     </h1>
     <p class="sub-text animated fadeInDown">
-      We ship you a 3D printer. Print as much as you like.<br/>Send it back when you're done.
+      Thanks for your support!
     </p>
-    <div class="cta animated fadeInDown">
-      <%= link_to "Get Started", new_rental_path, class: "button" %>
-      <%= link_to "How It Works", how_it_works_path, class: "button-outline" %>
-    </div>
-    <div class="img"></div>
   </div>
-</div>
-
-<div id="features">
-  <div class="container">
-    <div class="row header">
-      <div class="col-md-12">
-        <h2>No prior experience? No problem.</h2>
-        <p>Rentabuild provides plastic filament, training videos, and personal support- everything you need to get started.</p>
-      </div>
-    </div>
-    <div class="row feature">
-      <div class="col-md-6 info">
-        <h4>Bring a 3D printer into your home, workshop, or classroom.</h4>
-        <p>
-          Whether you have a project you need printed, want to introduce students
-          to printing, or are just curious about new technology, renting is a
-          great way to experience 3D printing without breaking the bank.
-        </p>
-      </div>
-      <div class="col-md-6 image">
-        <%= image_tag "feature_example.png", class: "img-responsive" %>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <div class="row feature backwards">
-      <div class="col-md-6 info">
-        <h4>High-quality printers.</h4>
-        <p>
-          <%= link_to "Printrbot Simple Metal", printrbot_path %><br/>
-          Best entry-level 3D printer on the market.
-        </p>
-
-        <p>
-          <%= link_to "Lulzbot Mini", "https://www.lulzbot.com/products/lulzbot-mini-3d-printer", target: :blank %><br/>
-          Easy to use, supports wide variety of filaments.
-        </p>
-        <p>
-          <%= link_to "Ultimaker II", "https://ultimaker.com/", target: :blank %><br/>
-          Uncompromising professional quality.
-        </p>
-      </div>
-      <div class="col-md-6 image">
-        <%= image_tag "feature_ultimaker.png", class: "img-responsive" %>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <div class="row feature">
-      <div class="col-md-6 info">
-        <h4>Print as much as you need.</h4>
-        <p>
-          Design is iterative. Refine your designs and print until it's perfect.
-          There are no limitations on how much you can use the printer during
-          your rental.
-        </p>
-      </div>
-      <div class="col-md-6 image">
-        <%= image_tag "feature_filament.png", class: "img-responsive" %>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <div class="row feature backwards">
-      <div class="col-md-6 info">
-        <h4>Try before you buy.</h4>
-        <p>
-          Find out if a printer is right for you before purchasing.<br/>
-          Keep it at the end of your rental- we'll subtract your rental fee.
-        </p>
-      </div>
-      <div class="col-md-6 image">
-        <%= image_tag "printrbot_side.png", class: "img-responsive" %>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="pricing">
-  <div class="container">
-      <%= render partial: "home/pricing_table" %>
-  </div>
-</div>
-
-<div id="cta">
-  <p>
-    Ready to start printing?
-  </p>
-  <%= link_to "Get Started", new_rental_path %>
 </div>
